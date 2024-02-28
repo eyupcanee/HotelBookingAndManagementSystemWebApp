@@ -15,7 +15,6 @@ const UserTestSchema = mongoose.Schema(
       type: String,
       required: true,
       max: 90,
-      unique: true,
     },
     password: {
       type: String,
