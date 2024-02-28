@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
-import Hotel from "./Hotel";
 
-const HotelManagerSchema = new mongoose.Schema(
+const AdminTestSchema = new mongoose.Schema(
   {
     firstName: {
       type: String,
@@ -15,7 +14,6 @@ const HotelManagerSchema = new mongoose.Schema(
       type: String,
       required: true,
       max: 80,
-      unique: true,
     },
     password: {
       type: String,
@@ -25,18 +23,12 @@ const HotelManagerSchema = new mongoose.Schema(
     phoneNumber: String,
     role: {
       type: String,
-      enum: ["hmanager"],
-      default: "hmanager",
+      enum: ["admin"],
+      default: "admin",
     },
-    hotels: [
-      {
-        type: mongoose.Schema.ObjectId,
-        ref: Hotel,
-      },
-    ],
   },
   { timestamps: true }
 );
 
-const HotelManager = mongoose.model("HotelManager", HotelManagerSchema);
-export default HotelManager;
+const AdminTest = mongoose.model("AdminTest", AdminTestSchema);
+export default AdminTest;
