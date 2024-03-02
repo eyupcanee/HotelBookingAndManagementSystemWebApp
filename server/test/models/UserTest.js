@@ -30,7 +30,7 @@ const UserTestSchema = mongoose.Schema(
     reservations: [
       {
         type: mongoose.Schema.ObjectId,
-        ref: Reservation,
+        ref: ReservationTest,
       },
     ],
   },

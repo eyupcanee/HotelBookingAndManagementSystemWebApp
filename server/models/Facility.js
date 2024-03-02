@@ -11,5 +11,5 @@ const FaciltySchema = new mongoose.Schema(
   { timestamps: false }
 );
 
-const Facility = mongoose.Schema("Facilty", FaciltySchema);
+const Facility = mongoose.Model("Facilty", FaciltySchema);
 export default Facilty;

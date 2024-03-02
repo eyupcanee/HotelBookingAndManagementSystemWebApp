@@ -10,5 +10,5 @@ const FaciltyTestSchema = new mongoose.Schema(
   { timestamps: false }
 );
 
-const FacilityTest = mongoose.Schema("FacilityTest", FaciltyTestSchema);
+const FacilityTest = mongoose.Model("FacilityTest", FaciltyTestSchema);
 export default FacilityTest;
