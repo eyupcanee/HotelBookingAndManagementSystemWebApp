@@ -6,6 +6,9 @@ import dotenv from "dotenv";
 import helmet from "helmet";
 import morgan from "morgan";
 
+//TEST ROUTES
+import AdminTestRoutes from "./test/routes/AdminTestRoutes.js";
+
 dotenv.config({ path: "./.env.development.local" });
 
 // APP Configration
@@ -18,6 +21,9 @@ app.use(morgan("common"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
+
+//TEST ROUTES
+app.use("/admintest", AdminTestRoutes);
 
 // Mongoose Configration
 const PORT = process.env.PORT || 8000;

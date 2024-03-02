@@ -1,5 +1,5 @@
-import redisClient from "../../cache/RedisConfigration";
-import AdminTest from "../models/AdminTest";
+import redisClient from "../../cache/RedisConfigration.js";
+import AdminTest from "../models/AdminTest.js";
 import { authorizeAdmin, getAdminId } from "../../util/Authorize.js";
 
 (async () => {

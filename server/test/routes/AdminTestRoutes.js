@@ -39,10 +39,10 @@ const upload = multer({ storage: storage, fileFilter: fileFilter });
 
 const router = express.Router();
 
-router.post("/addadmin/:token", upload.single("profilePicture"), addTestAdmin);
+router.post("/addadmin", upload.single("profilePicture"), addTestAdmin);
 router.post("/login", loginTestAdmin);
 router.post("/logout/:token", logoutTestAdmin);
-router.post("/get/:id/:token", getTestAdminCached, getTestAdmin);
+router.get("/get/:id/:token", getTestAdminCached, getTestAdmin);
 router.get("/get/:token", getAllAdminsCached, getAllTestAdmins);
 
 export default router;

@@ -1,9 +1,9 @@
 import AdminTest from "../models/AdminTest.js";
-import jwtDecode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
-import { authorizeAdmin, getAdminId } from "../utils/Authorize.js";
+import { authorizeAdmin, getAdminId } from "../../util/Authorize.js";
 import { v2 as cloudinary } from "cloudinary";
 import redisClient from "../../cache/RedisConfigration.js";
 
@@ -144,7 +144,7 @@ export const addTestAdmin = async (req, res) => {
         lastName,
         email,
         password: encryptedPassword,
-        profilePicture: `${result ? result.secure_url : img}`,
+        profilePicture: `${result ? result.secure_url : profilePicture}`,
         phoneNumber,
       });
 
