@@ -1,17 +1,15 @@
 import mongoose from "mongoose";
-import UserTest from "./UserTest";
-import HotelTest from "./HotelTest";
 
 const CommentTestSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.ObjectId,
     required: true,
-    ref: UserTest,
+    ref: "UserTest",
   },
   hotelId: {
     type: mongoose.Schema.ObjectId,
     required: true,
-    ref: HotelTest,
+    ref: "HotelTest",
   },
   comment: {
     type: String,
@@ -19,5 +17,5 @@ const CommentTestSchema = new mongoose.Schema({
   },
 });
 
-const CommentTest = mongoose.Model("CommentTest", CommentTestSchema);
+const CommentTest = mongoose.model("CommentTest", CommentTestSchema);
 export default CommentTest;

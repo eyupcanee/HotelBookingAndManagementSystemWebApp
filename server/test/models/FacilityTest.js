@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const FaciltyTestSchema = new mongoose.Schema(
   {
-    faciltyName: {
+    facilityName: {
       type: String,
       required: true,
     },
@@ -10,5 +10,5 @@ const FaciltyTestSchema = new mongoose.Schema(
   { timestamps: false }
 );
 
-const FacilityTest = mongoose.Model("FacilityTest", FaciltyTestSchema);
+const FacilityTest = mongoose.model("FacilityTest", FaciltyTestSchema);
 export default FacilityTest;

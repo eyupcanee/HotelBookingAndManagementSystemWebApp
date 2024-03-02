@@ -1,24 +1,21 @@
 import mongoose, { mongo } from "mongoose";
-import UserTest from "./UserTest";
-import HotelTest from "./HotelTest";
-import RoomTest from "./RoomTest";
 
 const ReservationTestSchema = new mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.ObjectId,
       required: true,
-      ref: UserTest,
+      ref: "UserTest",
     },
     hotelId: {
       type: mongoose.Schema.ObjectId,
       required: true,
-      ref: HotelTest,
+      ref: "HotelTest",
     },
     roomId: {
       type: mongoose.Schema.ObjectId,
       required: true,
-      ref: RoomTest,
+      ref: "RoomTest",
     },
     numberOfPeople: {
       type: Number,

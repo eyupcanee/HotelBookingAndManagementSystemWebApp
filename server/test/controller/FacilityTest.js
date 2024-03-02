@@ -64,12 +64,10 @@ export const getAllTestFacilities = async (req, res) => {
 export const addTestFacility = async (req, res) => {
   try {
     const { token } = req.params;
-
+    const { facilityName } = req.body;
     if (await authorizeAdmin(token)) {
-      const { faciltyName } = req.body;
-
       const newFacility = new FacilityTest({
-        faciltyName,
+        facilityName,
       });
 
       await newFacility.save().then(() => {

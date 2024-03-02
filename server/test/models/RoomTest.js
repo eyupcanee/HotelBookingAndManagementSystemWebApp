@@ -1,12 +1,10 @@
 import mongoose from "mongoose";
-import HotelTest from "./HotelTest";
-import FacilityTest from "./FacilityTest";
 
 const RoomTestSchema = new mongoose.Schema(
   {
     hotelId: {
       type: mongoose.Schema.ObjectId,
-      ref: HotelTest,
+      ref: "HotelTest",
     },
     description: String,
     pricePerNight: {
@@ -16,7 +14,7 @@ const RoomTestSchema = new mongoose.Schema(
     facilities: [
       {
         type: mongoose.Schema.ObjectId,
-        ref: FacilityTest,
+        ref: "FacilityTest",
       },
     ],
     images: [

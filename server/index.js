@@ -8,6 +8,8 @@ import morgan from "morgan";
 
 //TEST ROUTES
 import AdminTestRoutes from "./test/routes/AdminTestRoutes.js";
+import UserTestRoutes from "./test/routes/UserTestRoutes.js";
+import FacilityTestRoutes from "./test/routes/FacilityTestRoutes.js";
 
 dotenv.config({ path: "./.env.development.local" });
 
@@ -24,6 +26,8 @@ app.use(cors());
 
 //TEST ROUTES
 app.use("/admintest", AdminTestRoutes);
+app.use("/usertest", UserTestRoutes);
+app.use("/facilitytest", FacilityTestRoutes);
 
 // Mongoose Configration
 const PORT = process.env.PORT || 8000;

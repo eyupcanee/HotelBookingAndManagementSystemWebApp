@@ -1,7 +1,4 @@
 import mongoose from "mongoose";
-import FacilityTest from "./FacilityTest";
-import CommentTest from "./CommentTest";
-import RoomTest from "./RoomTest";
 
 const HotelTestSchema = new mongoose.Schema({
   hotelName: {
@@ -37,19 +34,19 @@ const HotelTestSchema = new mongoose.Schema({
   facilities: [
     {
       type: mongoose.Schema.ObjectId,
-      ref: FacilityTest,
+      ref: "FacilityTest",
     },
   ],
   comments: [
     {
       type: mongoose.Schema.ObjectId,
-      ref: CommentTest,
+      ref: "CommentTest",
     },
   ],
   rooms: [
     {
       type: mongoose.Schema.ObjectId,
-      ref: RoomTest,
+      ref: "RoomTest",
     },
   ],
 });

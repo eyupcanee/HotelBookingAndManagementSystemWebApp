@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import ReservationTest from "./ReservationTest";
 
 const UserTestSchema = mongoose.Schema(
   {
@@ -30,12 +29,12 @@ const UserTestSchema = mongoose.Schema(
     reservations: [
       {
         type: mongoose.Schema.ObjectId,
-        ref: ReservationTest,
+        ref: "ReservationTest",
       },
     ],
   },
   { timestamps: true }
 );
 
-const UserTest = mongoose.Schema("UserTest", UserTestSchema);
+const UserTest = mongoose.model("UserTest", UserTestSchema);
 export default UserTest;

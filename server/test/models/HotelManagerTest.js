@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import HotelTest from "./HotelTest";
 
 const HotelManagerTestSchema = new mongoose.Schema(
   {
@@ -30,7 +29,7 @@ const HotelManagerTestSchema = new mongoose.Schema(
     hotels: [
       {
         type: mongoose.Schema.ObjectId,
-        ref: HotelTest,
+        ref: "HotelTest",
       },
     ],
   },

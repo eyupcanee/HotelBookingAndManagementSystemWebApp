@@ -2,17 +2,18 @@ import express from "express";
 import multer from "multer";
 
 import {
-  addTestAdmin,
-  loginTestAdmin,
-  logoutTestAdmin,
-  getTestAdmin,
-  getAllTestAdmins,
-} from "../controller/AdminTest.js";
+  getTestUser,
+  getAllTestUsers,
+  loginTestUser,
+  logoutTestUser,
+  registerTestUser,
+  deleteTestUser,
+} from "../controller/UserTest.js";
 
 import {
-  getTestAdminCached,
-  getAllAdminsCached,
-} from "../cache/AdminTestCache.js";
+  getTestUserCached,
+  getAllTestUsersCached,
+} from "../cache/UserTestCache.js";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -39,10 +40,11 @@ const upload = multer({ storage: storage, fileFilter: fileFilter });
 
 const router = express.Router();
 
-router.post("/addadmin/:token", upload.single("profilePicture"), addTestAdmin);
-router.post("/login", loginTestAdmin);
-router.post("/logout/:token", logoutTestAdmin);
-router.get("/get/:id/:token", getTestAdminCached, getTestAdmin);
-router.get("/get/:token", getAllAdminsCached, getAllTestAdmins);
+router.post("/register", upload.single("profilePicture"), registerTestUser);
+router.post("/login", loginTestUser);
+router.post("/logout/:token", logoutTestUser);
+router.delete("/del/:id/:token", deleteTestUser);
+router.get("/get/:id/:token", getTestUserCached, getTestUser);
+router.get("/get/:token", getAllTestUsersCached, getAllTestUsers);
 
 export default router;
