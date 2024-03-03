@@ -26,12 +26,6 @@ const HotelManagerTestSchema = new mongoose.Schema(
       enum: ["hmanager"],
       default: "hmanager",
     },
-    hotels: [
-      {
-        type: mongoose.Schema.ObjectId,
-        ref: "HotelTest",
-      },
-    ],
   },
   { timestamps: true }
 );

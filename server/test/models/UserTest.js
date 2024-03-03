@@ -26,12 +26,6 @@ const UserTestSchema = mongoose.Schema(
       enum: ["user"],
       default: "user",
     },
-    reservations: [
-      {
-        type: mongoose.Schema.ObjectId,
-        ref: "ReservationTest",
-      },
-    ],
   },
   { timestamps: true }
 );

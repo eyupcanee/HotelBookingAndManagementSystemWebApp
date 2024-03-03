@@ -5,6 +5,10 @@ const HotelTestSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  managerId: {
+    type: mongoose.Schema.ObjectId,
+    ref: "HotelManager",
+  },
   description: {
     type: String,
     min: 10,
@@ -35,18 +39,6 @@ const HotelTestSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.ObjectId,
       ref: "FacilityTest",
-    },
-  ],
-  comments: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: "CommentTest",
-    },
-  ],
-  rooms: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: "RoomTest",
     },
   ],
 });
