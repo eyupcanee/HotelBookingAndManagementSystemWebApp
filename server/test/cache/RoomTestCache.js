@@ -1,5 +1,5 @@
 import redisClient from "../../cache/RedisConfigration.js";
-import HotelTest from "../models/HotelTest.js";
+import RoomTest from "../models/RoomTest.js";
 import { authorizeAdmin, getAdminId } from "../../util/Authorize.js";
 
 (async () => {
@@ -8,7 +8,7 @@ import { authorizeAdmin, getAdminId } from "../../util/Authorize.js";
   } catch (error) {}
 })();
 
-export const getTestHotelCached = async (req, res, next) => {
+export const getTestRoomCached = async (req, res, next) => {
   const { id } = req.params;
   let results;
   try {
@@ -24,13 +24,13 @@ export const getTestHotelCached = async (req, res, next) => {
   }
 };
 
-export const getAllHotelsCached = async (req, res, next) => {
-  const hashKey = "testhotels";
+export const getAllRoomsCached = async (req, res, next) => {
+  const hashKey = "testrooms";
   try {
-    const allHotelsFromDB = await HotelTest.countDocuments();
-    const cacheHotelCount = await redisClient.hlen(hashKey);
+    const allRoomsFromDB = await RoomTest.countDocuments();
+    const cacheRoomCount = await redisClient.hlen(hashKey);
 
-    if (cacheHotelCount == allHotelsFromDB) {
+    if (cacheRoomCount == allRoomsFromDB) {
       redisClient.hgetall(hashKey, (error, results) => {
         if (error) {
           res.status(404).json({ status: "no", message: error.message });

@@ -13,6 +13,7 @@ import FacilityTestRoutes from "./test/routes/FacilityTestRoutes.js";
 import CommentTestRoutes from "./test/routes/CommentTestRoutes.js";
 import HotelManagerTestRoutes from "./test/routes/HotelManagerTestRoutes.js";
 import HotelTestRoutes from "./test/routes/HotelTestRoutes.js";
+import RoomTestRoutes from "./test/routes/RoomTestRoutes.js";
 
 dotenv.config({ path: "./.env.development.local" });
 
@@ -34,6 +35,7 @@ app.use("/facilitytest", FacilityTestRoutes);
 app.use("/commenttest", CommentTestRoutes);
 app.use("/hmanagertest", HotelManagerTestRoutes);
 app.use("/hoteltest", HotelTestRoutes);
+app.use("/roomtest", RoomTestRoutes);
 
 // Mongoose Configration
 const PORT = process.env.PORT || 8000;

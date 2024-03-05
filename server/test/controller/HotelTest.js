@@ -36,6 +36,7 @@ export const getTestHotel = async (req, res) => {
     await redisClient.del(id);
     HotelTest.findById(id)
       .then((hotel) => {
+        redisClient.set(id, JSON.stringify(hotel));
         res.status(200).json({ status: "ok", fromCache: false, data: hotel });
       })
       .catch((error) => {
@@ -58,7 +59,7 @@ export const getAllTestHotels = async (req, res) => {
           if (error) {
             console.log(`Error : ${error.message}`);
           } else if (result == 1) {
-            console.log(`User ${testhotel._id} has added succesfully.`);
+            console.log(`Hotel ${testhotel._id} has added succesfully.`);
           } else {
             console.log(`${testhotel._id} is already exists.`);
           }
