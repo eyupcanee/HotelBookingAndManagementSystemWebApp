@@ -66,7 +66,7 @@ export const getAllTestHotels = async (req, res) => {
         }
       );
     });
-    res.status(200).json({ status: "ok", fromCache: false, data: testhotel });
+    res.status(200).json({ status: "ok", fromCache: false, data: testhotes });
   } catch (error) {
     res.status(404).json({ status: "no", message: error.message });
   }
@@ -97,6 +97,8 @@ export const addTestHotel = async (req, res) => {
         const uploadedResults = await Promise.all(promises);
 
         var imageUrls = uploadedResults.map((result) => result.secure_url);
+      } else {
+        imageUrls = images; // Eğer gelen istekte images dizisi doluysa, onu direkt olarak kullan
       }
 
       const newTestHotel = new HotelTest({
@@ -169,7 +171,7 @@ export const getTestHotelsByLocation = async (req, res) => {
   const { country, city, district } = req.body;
   let query = {};
   if (country) query.country = country.toLowerCase();
-  if (city) query.city = country.toLowerCase();
+  if (city) query.city = city.toLowerCase();
   if (district) query.district = district.toLowerCase();
   try {
     const testhotels = await HotelTest.find(query);
@@ -194,7 +196,7 @@ export const getTestHotelsByManager = async (req, res) => {
 };
 
 export const getTestHotelsByMaxPrice = async (req, res) => {
-  const { maxPrice } = req.body;
+  const { maxPrice } = req.params;
   try {
     const testhotels = await HotelTest.find({
       averagePrice: { $lt: maxPrice },
@@ -253,8 +255,6 @@ export const getTestHotelsByCriteria = async (req, res) => {
       if (city) query.city = country.toLowerCase();
       if (district) query.district = district.toLowerCase();
       if (maxPrice) query.averagePrice = { $lt: maxPrice };
-
-      const testhotels = await HotelTest.find(query);
 
       const testhotels = await HotelTest.find(query);
       res.status(200).json({ status: "ok", data: testhotels });
