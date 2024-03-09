@@ -11,6 +11,7 @@ import {
   getTestRoomsByMaxCapacity,
   getTestRoomsByMaxPrice,
   getTestRoomsByFacilities,
+  getTestRoomsByCriteria,
 } from "../controller/RoomTest.js";
 
 import {
@@ -47,10 +48,11 @@ router.post("/addroom/:token", addTestRoom);
 router.get("/get/:id", getTestRoomCached, getTestRoom);
 router.get("/get", getAllRoomsCached, getAllTestRooms);
 router.get("/get/hotel/:hotelId", getTestRoomsByHotel);
-router.get("/get/maxprice", getTestRoomsByMaxPrice);
-router.get("/get/maxcapacity", getTestRoomsByMaxCapacity);
-router.get("/get/capacity", getTestRoomsByCapacity);
-router.get("/get/availability", getTestRoomsByAvailability);
-router.get("/get/facilities", getTestRoomsByFacilities);
+router.get("/get/maxprice/:maxPrice", getTestRoomsByMaxPrice);
+router.get("/get/maxcapacity/:maxCapacity", getTestRoomsByMaxCapacity);
+router.get("/get/capacity/:capacity", getTestRoomsByCapacity);
+router.get("/get/availability/:available", getTestRoomsByAvailability);
+router.post("/get/facilities", getTestRoomsByFacilities);
+router.post("/get/criteria", getTestRoomsByCriteria);
 
 export default router;

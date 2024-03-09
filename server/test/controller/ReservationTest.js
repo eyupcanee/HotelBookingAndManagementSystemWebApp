@@ -14,6 +14,7 @@ import {
 } from "../../util/Authorize.js";
 import { v2 as cloudinary } from "cloudinary";
 import redisClient from "../../cache/RedisConfigration.js";
+import RoomTest from "../models/RoomTest.js";
 
 dotenv.config({ path: "../../.env.development.local" });
 
@@ -170,9 +171,14 @@ export const addTestReservation = async (req, res) => {
         $or: [
           {
             checkIn: { $lt: checkOut },
-            checkOut: { $gt: checkIn },
+            checkOut: { $gt: numberOfPeople },
           },
         ],
+      });
+
+      const overcapacity = await RoomTest.find({
+        _id: roomId,
+        capacity: { $lt: numberOfPeople },
       });
 
       if (overlappingReservations.length > 0) {
@@ -180,25 +186,29 @@ export const addTestReservation = async (req, res) => {
           .status(404)
           .json({ status: "no", message: "Overlapping reservation!" });
       }
-
-      const newTestReservation = new ReservationTest({
-        userId,
-        hotelId,
-        roomId,
-        numberOfPeople,
-        checkIn,
-        checkOut,
-        totalCharge,
-      });
-
-      await newTestReservation
-        .save()
-        .then(() => {
-          res.status(200).json({ status: "ok" });
-        })
-        .catch((error) => {
-          res.status(404).json({ status: "no", message: error.message });
+      if (overcapacity.length > 0) {
+        res
+          .status(404)
+          .json({ status: "no", message: "Overcapacity reservation!" });
+      } else {
+        const newTestReservation = new ReservationTest({
+          userId,
+          hotelId,
+          roomId,
+          numberOfPeople,
+          checkIn,
+          checkOut,
+          totalCharge,
         });
+        await newTestReservation
+          .save()
+          .then(() => {
+            res.status(200).json({ status: "ok" });
+          })
+          .catch((error) => {
+            res.status(404).json({ status: "no", message: error.message });
+          });
+      }
     }
   } catch (error) {
     res.status(404).json({ status: "no", message: error.message });

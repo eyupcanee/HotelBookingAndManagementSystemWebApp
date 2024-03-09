@@ -45,10 +45,13 @@ const router = express.Router();
 router.post("/addhotel/:token", upload.array("images"), addTestHotel);
 router.get("/get/:id", getTestHotelCached, getTestHotel);
 router.get("/get", getAllHotelsCached, getAllTestHotels);
-router.post("/get/location", getTestHotelsByLocation);
+router.get(
+  "/get/location/:country?/:city?/:district?",
+  getTestHotelsByLocation
+);
 router.get("/get/manager/:managerId", getTestHotelsByManager);
 router.get("/get/maxprice/:maxPrice", getTestHotelsByMaxPrice);
-router.get("/get/facilities", getTestHotelsByFacilities);
-router.get("/get/criteria", getTestHotelsByCriteria);
+router.post("/get/facilities", getTestHotelsByFacilities);
+router.post("/get/criteria", getTestHotelsByCriteria);
 
 export default router;

@@ -67,7 +67,7 @@ export const getAllTestRooms = async (req, res) => {
         }
       );
     });
-    res.status(200).json({ status: "ok", fromCache: false, data: testhotel });
+    res.status(200).json({ status: "ok", fromCache: false, data: testrooms });
   } catch (error) {
     res.status(404).json({ status: "no", message: error.message });
   }
@@ -81,13 +81,13 @@ export const addTestRoom = async (req, res) => {
         hotelId,
         description,
         pricePerNight,
-        faclities,
+        facilities,
         images,
         capacity,
         available,
       } = req.body;
 
-      if (!images || images.length < 1) {
+      if ((!images || images.length < 1) && req.files) {
         const promises = req.files.map((file) =>
           cloudinary.uploader.upload(file.buffer)
         );
@@ -121,7 +121,7 @@ export const addTestRoom = async (req, res) => {
           hotelId,
           description,
           pricePerNight,
-          faclities,
+          facilities,
           images,
           capacity,
           available,
@@ -173,10 +173,10 @@ export const getTestRoomsByHotel = async (req, res) => {
 };
 
 export const getTestRoomsByMaxPrice = async (req, res) => {
-  const { maxPrice } = req.body;
+  const { maxPrice } = req.params;
   try {
     const testrooms = await RoomTest.find({
-      pricePerNight: { $lt: maxPrice },
+      pricePerNight: { $lte: maxPrice },
     });
     res.status(200).json({ status: "ok", data: testrooms });
   } catch (error) {
@@ -185,10 +185,10 @@ export const getTestRoomsByMaxPrice = async (req, res) => {
 };
 
 export const getTestRoomsByMaxCapacity = async (req, res) => {
-  const { maxCapacity } = req.body;
+  const { maxCapacity } = req.params;
   try {
     const testrooms = await RoomTest.find({
-      capacity: { $lt: maxCapacity },
+      capacity: { $lte: maxCapacity },
     });
     res.status(200).json({ status: "ok", data: testrooms });
   } catch (error) {
@@ -197,7 +197,7 @@ export const getTestRoomsByMaxCapacity = async (req, res) => {
 };
 
 export const getTestRoomsByCapacity = async (req, res) => {
-  const { capacity } = req.body;
+  const { capacity } = req.params;
   try {
     const testrooms = await RoomTest.find({
       capacity: capacity,
@@ -209,7 +209,7 @@ export const getTestRoomsByCapacity = async (req, res) => {
 };
 
 export const getTestRoomsByAvailability = async (req, res) => {
-  const { available } = req.body;
+  const { available } = req.params;
   try {
     const testrooms = await RoomTest.find({
       available: available,
@@ -223,9 +223,8 @@ export const getTestRoomsByAvailability = async (req, res) => {
 export const getTestRoomsByFacilities = async (req, res) => {
   const { facilities } = req.body;
   try {
-    const facilityNames = facilities.split(",");
     const facilityObjects = await FacilityTest.find({
-      facilityName: { $in: facilityNames },
+      _id: { $in: facilities },
     });
 
     const facilityIds = facilityObjects.map((facility) => facility._id);
@@ -234,6 +233,42 @@ export const getTestRoomsByFacilities = async (req, res) => {
     });
 
     res.status(200).json({ status: "ok", data: testrooms });
+  } catch (error) {
+    res.status(404).json({ status: "no", message: error.message });
+  }
+};
+
+export const getTestRoomsByCriteria = async (req, res) => {
+  const { hotelId, pricePerNight, facilities, capacity, available } = req.body;
+
+  try {
+    if (facilities && facilities.length > 0) {
+      let query = {};
+      if (hotelId) query.hotelId = hotelId;
+      if (capacity) query.capacity = { $lte: capacity };
+      if (available) query.available = available;
+      if (pricePerNight) query.pricePerNight = { $lte: pricePerNight };
+
+      const facilityObjects = await FacilityTest.find({
+        _id: { $in: facilities },
+      });
+
+      const facilityIds = facilityObjects.map((facility) => facility._id);
+
+      query.facilities = { $all: facilityIds };
+
+      const testrooms = await RoomTest.find(query);
+      res.status(200).json({ status: "ok", data: testrooms });
+    } else {
+      let query = {};
+      if (hotelId) query.hotelId = hotelId;
+      if (capacity) query.capacity = { $lte: capacity };
+      if (available) query.available = available;
+      if (pricePerNight) query.pricePerNight = { $lte: pricePerNight };
+
+      const testrooms = await RoomTest.find(query);
+      res.status(200).json({ status: "ok", data: testrooms });
+    }
   } catch (error) {
     res.status(404).json({ status: "no", message: error.message });
   }

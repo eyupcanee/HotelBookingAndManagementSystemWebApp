@@ -66,7 +66,7 @@ export const getAllTestHotels = async (req, res) => {
         }
       );
     });
-    res.status(200).json({ status: "ok", fromCache: false, data: testhotes });
+    res.status(200).json({ status: "ok", fromCache: false, data: testhotels });
   } catch (error) {
     res.status(404).json({ status: "no", message: error.message });
   }
@@ -168,7 +168,7 @@ export const addTestHotel = async (req, res) => {
 };
 
 export const getTestHotelsByLocation = async (req, res) => {
-  const { country, city, district } = req.body;
+  const { country, city, district } = req.params;
   let query = {};
   if (country) query.country = country.toLowerCase();
   if (city) query.city = city.toLowerCase();
@@ -199,7 +199,7 @@ export const getTestHotelsByMaxPrice = async (req, res) => {
   const { maxPrice } = req.params;
   try {
     const testhotels = await HotelTest.find({
-      averagePrice: { $lt: maxPrice },
+      averagePrice: { $lte: maxPrice },
     });
 
     res.status(200).json({ status: "ok", data: testhotels });
@@ -211,9 +211,8 @@ export const getTestHotelsByMaxPrice = async (req, res) => {
 export const getTestHotelsByFacilities = async (req, res) => {
   const { facilities } = req.body;
   try {
-    const facilityNames = facilities.split(",");
     const facilityObjects = await FacilityTest.find({
-      facilityName: { $in: facilityNames },
+      _id: { $in: facilities },
     });
 
     const facilityIds = facilityObjects.map((facility) => facility._id);
@@ -231,16 +230,15 @@ export const getTestHotelsByCriteria = async (req, res) => {
   const { country, city, district, maxPrice, facilities } = req.body;
 
   try {
-    if (facilities && len(facilities) > 0) {
+    if (facilities && facilities.length > 0) {
       let query = {};
       if (country) query.country = country.toLowerCase();
-      if (city) query.city = country.toLowerCase();
+      if (city) query.city = city.toLowerCase();
       if (district) query.district = district.toLowerCase();
-      if (maxPrice) query.averagePrice = { $lt: maxPrice };
+      if (maxPrice) query.averagePrice = { $lte: maxPrice };
 
-      const facilityNames = facilities.split(",");
       const facilityObjects = await FacilityTest.find({
-        facilityName: { $in: facilityNames },
+        _id: { $in: facilities },
       });
 
       const facilityIds = facilityObjects.map((facility) => facility._id);
@@ -254,7 +252,7 @@ export const getTestHotelsByCriteria = async (req, res) => {
       if (country) query.country = country.toLowerCase();
       if (city) query.city = country.toLowerCase();
       if (district) query.district = district.toLowerCase();
-      if (maxPrice) query.averagePrice = { $lt: maxPrice };
+      if (maxPrice) query.averagePrice = { $lte: maxPrice };
 
       const testhotels = await HotelTest.find(query);
       res.status(200).json({ status: "ok", data: testhotels });
