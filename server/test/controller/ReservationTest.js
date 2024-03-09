@@ -171,7 +171,7 @@ export const addTestReservation = async (req, res) => {
         $or: [
           {
             checkIn: { $lt: checkOut },
-            checkOut: { $gt: numberOfPeople },
+            checkOut: { $gt: checkIn },
           },
         ],
       });
