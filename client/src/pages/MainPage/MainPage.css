@@ -1,0 +1,27 @@
+.card-list {
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+.title-main {
+  padding-top: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.nutshell {
+  background: #eee;
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+.nutshell .item {
+  text-align: center;
+}
+
+.about {
+  padding-top: 60px;
+  padding-bottom: 60px;
+}

@@ -262,9 +262,9 @@ export const getTestHotelsByCriteria = async (req, res) => {
           _id: { $all: hotelIds },
         });
         res.status(200).json({ status: "ok", data: finaltesthotels });
+      } else {
+        res.status(200).json({ status: "ok", data: testhotels });
       }
-
-      res.status(200).json({ status: "ok", data: testhotels });
     } else {
       let query = {};
       if (country) query.country = country.toLowerCase();
@@ -287,9 +287,9 @@ export const getTestHotelsByCriteria = async (req, res) => {
           _id: { $in: hotelIds },
         });
         res.status(200).json({ status: "ok", data: finaltesthotels });
+      } else {
+        res.status(200).json({ status: "ok", data: testhotels });
       }
-
-      res.status(200).json({ status: "ok", data: testhotels });
     }
   } catch (error) {
     res.status(404).json({ status: "no", message: error.message });

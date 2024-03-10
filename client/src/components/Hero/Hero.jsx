@@ -1,9 +1,9 @@
 import "./Hero.css";
 import Search from "../Search/Search";
-const Hero = ({ title, description, percent, search }) => {
+const Hero = ({ title, description, height, width, search }) => {
   if (search) {
     return (
-      <section id="hero" style={{ height: percent + "dvh" }}>
+      <section id="hero" style={{ height: height + "dvh", width: width + "%" }}>
         <div className="container">
           <article>
             <h1>{title}</h1>
@@ -15,7 +15,7 @@ const Hero = ({ title, description, percent, search }) => {
     );
   } else {
     return (
-      <section id="hero" style={{ height: percent + "dvh" }}>
+      <section id="hero" style={{ height: height + "dvh", width: width + "%" }}>
         <div className="container">
           <article>
             <h1>{title}</h1>

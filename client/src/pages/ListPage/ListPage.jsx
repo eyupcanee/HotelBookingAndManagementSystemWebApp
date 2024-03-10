@@ -25,7 +25,12 @@ const ListPage = () => {
   return (
     <>
       <Header />
-      <Hero title={"Oteller"} description={"Anasayfa | Oteller"} percent={70} />
+      <Hero
+        title={"Oteller"}
+        description={"Anasayfa | Oteller"}
+        height={70}
+        width={100}
+      />
       <div>
         {data.map((item, index) => {
           return (

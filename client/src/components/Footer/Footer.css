@@ -1,0 +1,115 @@
+.parallax {
+  position: relative;
+  display: flex;
+  min-height: 30dvh;
+  background-image: url("../../assets/parallax.jpeg");
+  align-items: center;
+  justify-content: center;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: 1;
+}
+
+.parallax::after {
+  content: "";
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.parallax-content {
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.parallax-content h3 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.parallax-content .footer-link {
+  background-color: transparent;
+  color: white;
+  border: 2px solid white;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  border-radius: 60px;
+  padding: 20px 100px;
+  text-decoration: none;
+  transition: all 0.5s ease;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.parallax-content .footer-link:hover {
+  background-color: white;
+  color: black;
+}
+
+footer {
+  padding-block: 5rem 2rem;
+  background-color: rgb(15, 15, 15);
+  color: white;
+}
+
+footer h2,
+footer h3 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+footer h3 {
+  margin-top: 12px;
+}
+
+footer a {
+  color: inherit;
+  text-decoration: none;
+}
+
+footer .list {
+  display: flex;
+  flex-direction: column;
+}
+
+footer .list a {
+  padding-block: 5px;
+  color: white;
+  text-decoration: none;
+}
+
+footer form {
+  all: unset;
+}
+
+footer input {
+  background-color: transparent;
+  border: none;
+  border: 2px solid white;
+  border-radius: 16px;
+  padding: 0.6rem 0.8rem;
+  width: 100%;
+  color: white;
+}
+
+footer input::placeholder {
+  color: white;
+  opacity: 0.8;
+}
+
+footer .copyright {
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  text-align: center;
+}
