@@ -1,4 +1,5 @@
 import HotelTest from "../models/HotelTest.js";
+import RoomTest from "../models/RoomTest.js";
 import FacilityTest from "../models/FacilityTest.js";
 import { jwtDecode } from "jwt-decode";
 import jwt from "jsonwebtoken";
@@ -227,7 +228,8 @@ export const getTestHotelsByFacilities = async (req, res) => {
 };
 
 export const getTestHotelsByCriteria = async (req, res) => {
-  const { country, city, district, maxPrice, facilities } = req.body;
+  const { country, city, district, maxPrice, facilities, numberOfPeople } =
+    req.body;
 
   try {
     if (facilities && facilities.length > 0) {
@@ -246,15 +248,47 @@ export const getTestHotelsByCriteria = async (req, res) => {
       query.facilities = { $all: facilityIds };
 
       const testhotels = await HotelTest.find(query);
+
+      const testhotelsIds = testhotels.map((testhotel) => testhotel._id);
+
+      if (numberOfPeople) {
+        const rooms = await RoomTest.find({
+          hotelId: { $in: testhotelsIds },
+          numberOfPeople: { $gte: numberOfPeople },
+        });
+
+        const hotelIds = rooms.map((room) => room.hotelId);
+        const finaltesthotels = await HotelTest.find({
+          _id: { $all: hotelIds },
+        });
+        res.status(200).json({ status: "ok", data: finaltesthotels });
+      }
+
       res.status(200).json({ status: "ok", data: testhotels });
     } else {
       let query = {};
       if (country) query.country = country.toLowerCase();
-      if (city) query.city = country.toLowerCase();
+      if (city) query.city = city.toLowerCase();
       if (district) query.district = district.toLowerCase();
       if (maxPrice) query.averagePrice = { $lte: maxPrice };
 
       const testhotels = await HotelTest.find(query);
+
+      const testhotelsIds = testhotels.map((testhotel) => testhotel._id);
+
+      if (numberOfPeople) {
+        var rooms = await RoomTest.find({
+          hotelId: { $in: testhotelsIds },
+          capacity: { $gte: numberOfPeople },
+        });
+
+        const hotelIds = rooms.map((room) => room.hotelId);
+        const finaltesthotels = await HotelTest.find({
+          _id: { $in: hotelIds },
+        });
+        res.status(200).json({ status: "ok", data: finaltesthotels });
+      }
+
       res.status(200).json({ status: "ok", data: testhotels });
     }
   } catch (error) {

@@ -1,7 +1,15 @@
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import MainPage from "./pages/MainPage/MainPage";
+import ListPage from "./pages/ListPage/ListPage";
 function App() {
   return (
     <div className="App">
-      <h1>Hotel Booking And Management Web App</h1>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<MainPage />}></Route>
+          <Route path="/list" element={<ListPage />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
