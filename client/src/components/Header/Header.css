@@ -1,0 +1,34 @@
+header {
+  height: 80px;
+  position: relative;
+  z-index: 20;
+  color: white;
+}
+
+header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px;
+}
+
+header .logo {
+  font-family: "Readex Pro", sans-serif;
+  font-weight: 500;
+  font-size: 1.5rem;
+}
+
+header .links a {
+  padding: 20px 10px;
+  text-decoration: none;
+  color: white;
+  transition: all 0.5s ease;
+}
+
+header .links a:hover {
+  color: grey;
+}
+
+header .links a:last-child {
+  padding-right: 0;
+}

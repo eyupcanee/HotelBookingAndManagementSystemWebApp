@@ -1,0 +1,38 @@
+#hero {
+  background-image: url("../../assets/herobg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100dvh;
+  margin-top: -80px;
+  position: relative;
+  z-index: 1;
+  color: white;
+}
+
+#hero::after {
+  content: "";
+  background-color: rgba(0, 0, 0, 0.3);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+#hero .container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+#hero h1 {
+  font-size: 3rem;
+  margin-bottom: 0;
+}
+
+#hero article {
+  display: grid;
+}
