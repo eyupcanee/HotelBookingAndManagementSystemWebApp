@@ -8,13 +8,45 @@ form {
   border-radius: 8px;
 }
 
+.other {
+  margin: auto;
+  background-color: rgba(255, 255, 255, 1);
+  padding: 10px 25px;
+  color: black;
+  /* width: 60%; */
+  font-weight: 600;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
 .input-group {
   height: 80px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   gap: 10px;
+}
+
+.input-group-radio {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group-radio label {
+  margin-top: 10px;
+}
+
+.input-group-radio input {
+  border: 1px solid black;
+  padding: 8px 16px;
+  border-radius: 8px;
+}
+
+.input-group-radio input:checked {
+  background-color: aqua;
 }
 
 .input-group input {
@@ -22,6 +54,48 @@ form {
   padding: 8px 16px;
   border-radius: 8px;
   width: 100%;
+}
+
+.input-group .range {
+  display: flex;
+}
+
+.input-group .priceBox {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.input-group .priceBox input {
+  appearance: none;
+  width: 100px;
+  height: 10px;
+  background: white;
+  outline: none;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+}
+
+.input-group .priceBox input[type="number"] {
+  border: 0px;
+  font-weight: 600;
+  font-size: 1rem;
+  border-bottom: 1px solid black;
+  border-radius: 0;
+  padding: 10px;
+  align-items: center;
+  text-align: center;
+}
+
+.input-group .priceBox input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  background: black;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 .input-group input:focus {
@@ -32,6 +106,12 @@ form {
   border: 1px solid black;
   padding: 8px 16px;
   border-radius: 8px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .input-group button {
@@ -47,8 +127,49 @@ form {
   transition: all 0.5s ease;
 }
 
+.other-button {
+  color: black;
+  background-color: black !important;
+  border: 1px solid white;
+  border-radius: 8px;
+  font-weight: 600;
+  padding: 10px 30px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 20px;
+  transition: all 0.5s ease;
+  margin-left: 30px;
+}
+
+.other-button:hover {
+  background-color: white !important;
+  color: black;
+  border-color: white !important;
+}
+
 .input-group button:hover {
   background-color: white;
   color: black;
   border-color: black;
+}
+
+.facility {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+
+.facility label:first-child {
+  margin-bottom: 20px;
+  margin-top: 40px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.facilities {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
 }

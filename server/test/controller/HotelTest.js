@@ -252,14 +252,14 @@ export const getTestHotelsByCriteria = async (req, res) => {
       const testhotelsIds = testhotels.map((testhotel) => testhotel._id);
 
       if (numberOfPeople) {
-        const rooms = await RoomTest.find({
+        var rooms = await RoomTest.find({
           hotelId: { $in: testhotelsIds },
-          numberOfPeople: { $gte: numberOfPeople },
+          capacity: { $gte: numberOfPeople },
         });
 
         const hotelIds = rooms.map((room) => room.hotelId);
         const finaltesthotels = await HotelTest.find({
-          _id: { $all: hotelIds },
+          _id: { $in: hotelIds },
         });
         res.status(200).json({ status: "ok", data: finaltesthotels });
       } else {

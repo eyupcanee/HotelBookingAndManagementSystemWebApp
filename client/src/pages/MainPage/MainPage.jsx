@@ -12,7 +12,7 @@ const MainPage = () => {
   const criteria = {
     country: "turkey",
   };
-  const [data, setData] = useState([]);
+  const [data, setData] = useState([""]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const getData = async () => {

@@ -1,0 +1,36 @@
+.hotel-info {
+  margin-top: 60px;
+}
+
+.hotel-images {
+  display: flex;
+}
+
+.preview {
+  display: flex;
+  width: 100%;
+}
+
+.preview img {
+  object-fit: cover;
+  object-position: center;
+  aspect-ratio: 16/9;
+}
+
+.preview-thumbnails .swiper-wrapper {
+  flex-direction: column;
+  min-height: 300px;
+}
+
+.preview-thumbnails .swiper-slide {
+  height: auto;
+  min-width: 100px;
+  margin-bottom: 10px;
+}
+
+.preview-thumbnails .swiper-slide img {
+  width: 100px;
+  height: 80px;
+  object-fit: cover;
+  object-position: center;
+}
