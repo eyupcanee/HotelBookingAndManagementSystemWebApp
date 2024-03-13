@@ -2,6 +2,7 @@ import "./LoginUser.css";
 import Hero from "../../components/Hero/Hero"
 import AuthContext from "../../context/AuthProvider";
 
+
 import React, { useContext } from 'react'
 import { useState } from "react"
 import Header from "../../components/Header/Header"
@@ -30,9 +31,9 @@ const LoginUser = () => {
         return <div>Yükleniyor..</div>
     }
   return (
-    <>
+    <div className="loginpage">
     <div className="row">
-    <Header/>
+    <Header isNotMenu/>
     <Hero width={50} height={100} title={"Giriş Yap"} description={"Kullanıcı"}/>
         <div className="col-6">
             <div className="login-user-form">
@@ -46,7 +47,7 @@ const LoginUser = () => {
             </div>
         </div>
     </div>
-    </>
+    </div>
   )
 }
 

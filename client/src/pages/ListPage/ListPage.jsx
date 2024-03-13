@@ -16,7 +16,13 @@ const ListPage = () => {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const getData = async () => {
-      const result = await getHotelsByCriteria(location.state.data);
+      
+        let result;
+        if(location.state && location.state.data) {
+          result = await getHotelsByCriteria(location.state.data);
+        } else {
+          result = await getHotelsByCriteria({})
+        }
       setData(result.data.data);
       console.log(result.data.data);
       setLoading(false);
@@ -24,10 +30,11 @@ const ListPage = () => {
     };
 
     getData();
-  }, [location.state.data]);
+  }, [location]);
   if (loading) {
     return <div>Yükleniyor...</div>;
   }
+  
   return (
     <>
       <Header />

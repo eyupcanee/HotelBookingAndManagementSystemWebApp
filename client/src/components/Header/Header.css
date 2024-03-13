@@ -18,6 +18,16 @@ header .logo {
   font-size: 1.5rem;
 }
 
+header .logo a {
+  text-decoration: none;
+  color: white;
+}
+
+header .links {
+  display: flex;
+  align-items: center;
+}
+
 header .links a {
   padding: 20px 10px;
   text-decoration: none;
@@ -31,4 +41,19 @@ header .links a:hover {
 
 header .links a:last-child {
   padding-right: 0;
+}
+
+.user-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 10px;
+}
+
+header .links img {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  overflow: hidden;
 }

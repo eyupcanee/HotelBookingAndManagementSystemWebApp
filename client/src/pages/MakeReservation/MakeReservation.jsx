@@ -11,7 +11,7 @@ const MakeReservation = () => {
     }
   return (
     <>
-    <Header/>
+    <Header isNotMenu/>
         <Hero width={50} height={100} title={"Rezervasyon Yap"} description={"otelid"}/>
     </>
   )

@@ -2,6 +2,7 @@ import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUser,logoutUser } from "../api/userApi";
 
+
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -44,6 +45,7 @@ export const AuthProvider = ({ children }) => {
     logoutUser(token).then((res) => {
       if(res.data.status !== "no"){
         sessionStorage.removeItem("userProfile");
+        sessionStorage.removeItem("userId");
         setUser(null);
         navigate("/user/login");
       }
