@@ -87,13 +87,15 @@ export const addTestRoom = async (req, res) => {
         available,
       } = req.body;
 
-      if ((!images || images.length < 1) && req.files) {
+      if (!images || images.length < 1) {
         const promises = req.files.map((file) =>
           cloudinary.uploader.upload(file.buffer)
         );
         const uploadedResults = await Promise.all(promises);
 
         var imageUrls = uploadedResults.map((result) => result.secure_url);
+      } else {
+        imageUrls = images; // Eğer gelen istekte images dizisi doluysa, onu direkt olarak kullan
       }
 
       const newTestRoom = new RoomTest({
@@ -101,7 +103,7 @@ export const addTestRoom = async (req, res) => {
         description,
         pricePerNight,
         facilities,
-        images: `${!images || images.length < 1 ? imageUrls : images}`,
+        images: imageUrls,
         capacity,
         available,
       });

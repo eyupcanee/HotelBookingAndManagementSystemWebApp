@@ -41,9 +41,9 @@ const Footer = () => {
                 Sancaktepe / Istanbul
               </address>
               <h3>Mail</h3>
-              <Link to="mailto:example.mail.com">example.mail.com</Link>
+              <Link to="mailto:example.mail.com">eyupcanee@gmail.com</Link>
               <h3>Phone</h3>
-              <Link to="tel:905068476779">+90 (506) 847 67 79</Link>
+              <Link to="tel:905068476779">+90 (546) 593 39 41</Link>
             </div>
 
             <div className="col-4">

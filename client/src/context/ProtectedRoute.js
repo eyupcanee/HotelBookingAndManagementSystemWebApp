@@ -4,9 +4,11 @@ import AuthContext from "./AuthProvider";
 
 const ProtectedRoute = ({ children, accessBy, authType }) => {
   const navigate = useNavigate();
+  /*
   const { admin } = useContext(AuthContext);
-  const { hotelManager } = useContext(AuthContext);
+  const { hotelManager } = useContext(AuthContext);*/
   const { user } = useContext(AuthContext);
+  /*
   if (authType === "admin") {
     if (accessBy === "non-authenticated") {
       if (!admin) return children;
@@ -23,7 +25,8 @@ const ProtectedRoute = ({ children, accessBy, authType }) => {
       if (hotelManager) return children;
       else navigate("/hotelmanager/login");
     } else navigate("/hotelmanager/login");
-  } else if (authType === "user") {
+    */
+   if (authType === "user") {
     if (accessBy === "non-authenticated") {
       if (!user) return children;
       else navigate("/user/dashboard");
