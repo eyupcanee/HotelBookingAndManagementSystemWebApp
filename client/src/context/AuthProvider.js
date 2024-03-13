@@ -45,7 +45,6 @@ export const AuthProvider = ({ children }) => {
     logoutUser(token).then((res) => {
       if(res.data.status !== "no"){
         sessionStorage.removeItem("userProfile");
-        sessionStorage.removeItem("userId");
         setUser(null);
         navigate("/user/login");
       }

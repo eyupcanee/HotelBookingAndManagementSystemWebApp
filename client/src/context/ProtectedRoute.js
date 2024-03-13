@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Navigate } from "react-router-dom";
 import AuthContext from "./AuthProvider";
 
 const ProtectedRoute = ({ children, accessBy, authType }) => {
@@ -29,11 +29,11 @@ const ProtectedRoute = ({ children, accessBy, authType }) => {
    if (authType === "user") {
     if (accessBy === "non-authenticated") {
       if (!user) return children;
-      else navigate("/user/dashboard");
+      else ; return <Navigate to={"/user/dashboard"}/>
     } else if (accessBy === "authenticated") {
       if (user) return children;
-      else navigate("/user/login");
-    } else navigate("/user/login");
+      else return <Navigate to={"/user/login"}/>
+    } else return <Navigate to={"/user/login"}/>
   }
 };
 
