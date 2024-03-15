@@ -8,6 +8,7 @@ import { loginHotelManager,logoutHotelManager } from "../api/hotelManagerApi";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  const [error,setError] = useState();
   const navigate = useNavigate();
   
   const [admin, setAdmin] = useState(() => {
@@ -20,12 +21,16 @@ export const AuthProvider = ({ children }) => {
   const loginAdminAuth = async(admin) => {
     loginAdmin(admin).then((res) => {
       if(res.data.status === "no") {
-        setAdmin(null)
-      } else {
+        setAdmin(null);
+      } 
+      else {
         sessionStorage.setItem("adminProfile", JSON.stringify(res.data.token));
         setAdmin(res.data.token);
         navigate("/admin/dashboard");
       }
+    }).catch((error) => {
+      console.log(error)
+      setError(error.response.data.message);
     })
   }
 
@@ -36,6 +41,8 @@ export const AuthProvider = ({ children }) => {
         setAdmin(null);
         navigate("/login");
       }
+    }).catch((error) => {
+      setError(error);
     })
   }
 
@@ -56,6 +63,8 @@ export const AuthProvider = ({ children }) => {
         setHotelManager(res.data.token);
         navigate("/hotelmanager/dashboard");
       }
+    }).catch((error) => {
+      setError(error);
     })
   }
 
@@ -66,6 +75,8 @@ export const AuthProvider = ({ children }) => {
         setHotelManager(null);
         navigate("/login");
       }
+    }).catch((error) => {
+      setError(error);
     })
   }
   
@@ -86,6 +97,8 @@ export const AuthProvider = ({ children }) => {
         console.log(res.data.token);
         navigate("/")
       }
+    }).catch((error) => {
+      setError(error);
     })
   }
 
@@ -96,12 +109,15 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
         navigate("/login");
       }
+    }).catch((error) => {
+      setError(error);
     })
   }
 
   return (
     <AuthContext.Provider
       value={{
+        ...(error && { error }),
         user,
         admin,
         hotelManager,

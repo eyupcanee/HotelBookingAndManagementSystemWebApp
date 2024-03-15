@@ -113,7 +113,7 @@ export const loginTestUser = async (req, res) => {
         );
         res.status(200).json({ status: "ok", token: token });
       } else {
-        res.status(404).json({ status: "no", message: "Wrong password!" });
+        res.status(200).json({ status: "no", message: "Wrong password!" });
       }
     }
   } catch (error) {

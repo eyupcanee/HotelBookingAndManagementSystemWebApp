@@ -10,20 +10,30 @@ const LoginUser = () => {
     const [email,setEmail] = useState();
     const [password,setPassword] = useState();
     const [loading,setLoading] = useState(false); 
-    const {loginUserAuth} = useContext(AuthContext);
+    const [handleError, setError] = useState('');
+    const {loginUserAuth,error} = useContext(AuthContext);
 
 
     const handleSubmit =async (event) => {
         event.preventDefault();
 
         
+        if(error) {
+            setError("Eposta veya şifre yanlış")
+        }
+
+        if(email && password) {
             const user = {
                 email,
                 password,
             }
             
             await loginUserAuth(user);
-            setLoading(false);
+        }else {
+            setError("Lütfen tüm alanları doldurunuz!")
+        }
+        
+        setLoading(false);
     }
 
 
@@ -42,6 +52,7 @@ const LoginUser = () => {
                         <input type="mail" required onChange={(e) => setEmail(e.target.value)}/>
                         <label htmlFor="">Şifre</label>
                         <input type="password" required onChange={(e) => setPassword(e.target.value)}/>
+                        {handleError && <div style={{marginTop:"20px"}} className="form-error">{handleError}</div>}
                         <button onClick={handleSubmit}>Giriş Yap</button>
                     </div>
                 </div>

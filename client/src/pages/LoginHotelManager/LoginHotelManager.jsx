@@ -10,19 +10,28 @@ const LoginHotelManager = () => {
     const [email,setEmail] = useState();
     const [password,setPassword] = useState();
     const [loading,setLoading] = useState(false); 
-    const {loginHotelManagerAuth} = useContext(AuthContext);
+    const [handleError, setError] = useState('');
+    const {loginHotelManagerAuth,error} = useContext(AuthContext);
 
 
     const handleSubmit =async (event) => {
         event.preventDefault();
 
-        
-            const hotelManager = {
-                email,
-                password,
+            if(error) {
+                setError("Eposta veya şifre yanlış")
+            }
+
+            if(email && password) {
+                const hotelManager = {
+                    email,
+                    password,
+                }
+                
+                await loginHotelManagerAuth(hotelManager);
+            }else {
+                setError("Lütfen tüm alanları doldurunuz!")
             }
             
-            await loginHotelManagerAuth(hotelManager);
             setLoading(false);
        
     }
@@ -43,6 +52,7 @@ const LoginHotelManager = () => {
                         <input type="mail" required onChange={(e) => setEmail(e.target.value)}/>
                         <label htmlFor="">Şifre</label>
                         <input type="password" required onChange={(e) => setPassword(e.target.value)}/>
+                        {handleError && <div style={{marginTop:"20px"}} className="form-error">{handleError}</div>}
                         <button onClick={handleSubmit}>Giriş Yap</button>
                     </div>
                 </div>

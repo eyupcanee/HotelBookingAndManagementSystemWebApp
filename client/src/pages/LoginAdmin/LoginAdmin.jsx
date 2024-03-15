@@ -10,19 +10,35 @@ const LoginAdmin = () => {
     const [email,setEmail] = useState();
     const [password,setPassword] = useState();
     const [loading,setLoading] = useState(false); 
-    const {loginAdminAuth} = useContext(AuthContext);
+    const [handleError, setError] = useState('');
+    const {loginAdminAuth,error} = useContext(AuthContext);
 
 
     const handleSubmit =async (event) => {
         event.preventDefault();
 
-        
-            const admin = {
-                email,
-                password,
-            }
+        const submit = async () => {
+            if(error) {
+                setError("Eposta veya şifre yanlış")}
+            if(email && password) {
             
-            await loginAdminAuth(admin);
+                const admin = {
+                    email,
+                    password,
+                }
+                
+                await loginAdminAuth(admin)
+                
+            }
+             else {
+                setError("Lütfen tüm alanları doldurunuz!")
+            }
+    
+            
+        }
+
+        submit();
+        
             setLoading(false);
        
     }
@@ -39,11 +55,14 @@ const LoginAdmin = () => {
         <div className="col-6">
             <div className="login-form">
                 <div className="form-content">
+                    
                     <label htmlFor="">E-posta</label>
-                    <input type="mail" required onChange={(e) => setEmail(e.target.value)}/>
+                    <input type="mail" id="email" required="required" onChange={(e) => setEmail(e.target.value)}/>
                     <label htmlFor="">Şifre</label>
-                    <input type="password" required onChange={(e) => setPassword(e.target.value)}/>
+                    <input type="password" id="password" required="required" onChange={(e) => setPassword(e.target.value)}/>
+                    {handleError && <div style={{marginTop:"20px"}} className="form-error">{handleError}</div>}
                     <button onClick={handleSubmit}>Giriş Yap</button>
+                    
                 </div>
             </div>
         </div>

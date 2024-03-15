@@ -9,7 +9,7 @@ import { jwtDecode } from "jwt-decode";
 
 const Header = ({isNotMenu}) => {
   
-  const {logoutUserAuth,logoutAdminAuth, logOutHotelManagerAuth} = useContext(AuthContext);
+  const {logoutUserAuth,logoutAdminAuth, logoutHotelManagerAuth} = useContext(AuthContext);
   const [user,setUser] = useState();
   const [admin,setAdmin] = useState();
   const [hotelManager,setHotelManager] = useState();
@@ -28,7 +28,7 @@ const Header = ({isNotMenu}) => {
 
   const handleLogoutHotelManager = async (event) => {
     event.preventDefault();
-    await logOutHotelManagerAuth(sessionStorage.getItem("hotelManagerProfile"));
+    await logoutHotelManagerAuth(sessionStorage.getItem("hotelManagerProfile"));
   }
 
   useEffect(() => {
