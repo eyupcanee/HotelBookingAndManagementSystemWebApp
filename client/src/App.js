@@ -7,6 +7,8 @@ import MakeReservation from "./pages/MakeReservation/MakeReservation";
 import LoginUser from "./pages/LoginUser/LoginUser";
 import LoginRoute from "./pages/LoginRoute/LoginRoute";
 import { AuthProvider } from "./context/AuthProvider";
+import LoginAdmin from "./pages/LoginAdmin/LoginAdmin";
+import LoginHotelManager from "./pages/LoginHotelManager/LoginHotelManager";
 function App() {
   return (
     <div className="App">
@@ -25,13 +27,21 @@ function App() {
           <ProtectedRoute accessBy={"non-authenticated"} authType={"all"}>
               <LoginRoute/>
             </ProtectedRoute>}>
-            
           </Route>
           <Route path="/user/login" element={
             <ProtectedRoute authType="user" accessBy="non-authenticated">
               <LoginUser/>
             </ProtectedRoute>
-          
+          }/>
+          <Route path="/admin/login" element={
+            <ProtectedRoute authType="admin" accessBy="non-authenticated">
+              <LoginAdmin/>
+            </ProtectedRoute>
+          }/>
+          <Route path="/hotelmanager/login" element={
+            <ProtectedRoute authType="hotelManager" accessBy="non-authenticated">
+              <LoginHotelManager/>
+            </ProtectedRoute>
           }/>
         </Routes>
         </AuthProvider>

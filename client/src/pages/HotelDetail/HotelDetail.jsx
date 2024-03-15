@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import "./HotelDetail.css";
 import "swiper/css";
 import { useParams,Link } from "react-router-dom";
