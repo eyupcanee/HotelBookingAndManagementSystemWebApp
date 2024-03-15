@@ -3,20 +3,25 @@ import { Link } from "react-router-dom";
 import AuthContext from "../../context/AuthProvider";
 import { useContext, useEffect, useState } from "react";
 import { getUserAsUser } from "../../api/userApi";
+import { getAdmin } from "../../api/adminApi";
 import { jwtDecode } from "jwt-decode";
-import { useNavigate } from "react-router-dom";
+
 const Header = ({isNotMenu}) => {
-  const criteria = {
-    country:"turkey"
-  }
-  const navigate = useNavigate();
-  const {logoutUserAuth} = useContext(AuthContext);
+  
+  const {logoutUserAuth,logoutAdminAuth} = useContext(AuthContext);
   const [user,setUser] = useState();
+  const [admin,setAdmin] = useState();
   const [loading,setLoading] = useState(true);
   const handleLogoutUser = async (event) => {
     event.preventDefault();
 
     await logoutUserAuth(sessionStorage.getItem("userProfile"));
+  }
+
+  const handleLogoutAdmin = async (event) => {
+    event.preventDefault();
+
+    await logoutAdminAuth(sessionStorage.getItem("adminProfile"));
   }
 
   useEffect(() => {
@@ -26,6 +31,11 @@ const Header = ({isNotMenu}) => {
         const result = await getUserAsUser(id,sessionStorage.getItem("userProfile"))
         setUser(result.data.data);
         setLoading(false);
+      } else if (sessionStorage.getItem("adminProfile")) {
+        const id = await jwtDecode(sessionStorage.getItem("adminProfile")).id;
+        const result = await getAdmin(id,sessionStorage.getItem("adminProfile"));
+        setAdmin(result.data.data);
+        setLoading(false)
       }
       setLoading(false);
     }
@@ -65,10 +75,13 @@ if(loading) {
       <div className="container">
       <div className="logo"><Link to={"/"}>PLAIDESSA</Link></div>
         <div className="links">
+        <div className="user-link">
+          <p>Hoşgeldin {admin.firstName} |</p></div>
           <Link to={"/"} >Ana Sayfa</Link>
           <Link to={"/list"}>Oteller</Link>
-          <Link >Admin Panel</Link>
-          <Link >Çıkış Yap</Link>
+          <Link to={"/admin/dashboard"}>Admin Panel</Link>
+          <Link onClick={handleLogoutAdmin}>Çıkış Yap</Link>
+          <img src={admin.profilePicture} alt="" />
         </div>
       </div>
     </header>)
