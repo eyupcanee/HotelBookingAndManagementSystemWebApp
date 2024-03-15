@@ -1,6 +1,6 @@
 import redisClient from "../../cache/RedisConfigration.js";
 import HotelManagerTest from "../models/HotelManagerTest.js";
-import { authorizeAdmin, getAdminId } from "../../util/Authorize.js";
+import { authorizeAdmin, authorizeHotelManager, getAdminId, getHotelManagerId } from "../../util/Authorize.js";
 
 (async () => {
   try {
@@ -9,9 +9,8 @@ import { authorizeAdmin, getAdminId } from "../../util/Authorize.js";
 })();
 
 export const getTestHotelManagerCached = async (req, res, next) => {
-  const { token } = req.params;
+  const { id,token } = req.params;
   if (await authorizeAdmin(token)) {
-    const { id } = req.params;
     let results;
     try {
       const cacheResults = await redisClient.get(id);
@@ -24,7 +23,23 @@ export const getTestHotelManagerCached = async (req, res, next) => {
     } catch (error) {
       next();
     }
-  } else {
+  } else if ((await authorizeHotelManager(token)) && (await getHotelManagerId(token)) == id) {
+    let results;
+    try {
+      const cacheResults = await redisClient.get(id);
+      if (cacheResults) {
+        results = JSON.parse(cacheResults);
+        res.status(200).json({ status: "ok", fromCache: true, data: results });
+      } else {
+        next();
+      }
+    } catch (error) {
+      next();
+    }
+  } 
+  
+  
+  else {
     res.status(404).json({ status: "no", message: "Unauthorized process!" });
   }
 };

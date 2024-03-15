@@ -4,13 +4,15 @@ import AuthContext from "../../context/AuthProvider";
 import { useContext, useEffect, useState } from "react";
 import { getUserAsUser } from "../../api/userApi";
 import { getAdmin } from "../../api/adminApi";
+import { getHotelManager } from "../../api/hotelManagerApi";
 import { jwtDecode } from "jwt-decode";
 
 const Header = ({isNotMenu}) => {
   
-  const {logoutUserAuth,logoutAdminAuth} = useContext(AuthContext);
+  const {logoutUserAuth,logoutAdminAuth, logOutHotelManagerAuth} = useContext(AuthContext);
   const [user,setUser] = useState();
   const [admin,setAdmin] = useState();
+  const [hotelManager,setHotelManager] = useState();
   const [loading,setLoading] = useState(true);
   const handleLogoutUser = async (event) => {
     event.preventDefault();
@@ -22,6 +24,11 @@ const Header = ({isNotMenu}) => {
     event.preventDefault();
 
     await logoutAdminAuth(sessionStorage.getItem("adminProfile"));
+  }
+
+  const handleLogoutHotelManager = async (event) => {
+    event.preventDefault();
+    await logOutHotelManagerAuth(sessionStorage.getItem("hotelManagerProfile"));
   }
 
   useEffect(() => {
@@ -36,6 +43,11 @@ const Header = ({isNotMenu}) => {
         const result = await getAdmin(id,sessionStorage.getItem("adminProfile"));
         setAdmin(result.data.data);
         setLoading(false)
+      } else if (sessionStorage.getItem("hotelManagerProfile")) {
+        const id = await jwtDecode(sessionStorage.getItem("hotelManagerProfile")).id;
+        const result = await getHotelManager(id,sessionStorage.getItem("hotelManagerProfile"));
+        setHotelManager(result.data.data);
+        setLoading(false);
       }
       setLoading(false);
     }
@@ -90,10 +102,13 @@ if(loading) {
       <div className="container">
       <div className="logo"><Link to={"/"}>PLAIDESSA</Link></div>
         <div className="links">
+        <div className="user-link">
+          <p>Hoşgeldin {hotelManager.firstName} |</p></div>
           <Link  to={"/"}>Ana Sayfa</Link>
           <Link to={"/list"}>Oteller</Link>
-          <Link >Otel Yönetici Pabel</Link>
-          <Link >Çıkış Yap</Link>
+          <Link to={"/hotelmanager/dashboard"}>Otel Yönetici Panel</Link>
+          <Link onClick={handleLogoutHotelManager}>Çıkış Yap</Link>
+          <img src={hotelManager.profilePicture} alt="" />
         </div>
       </div>
     </header>)

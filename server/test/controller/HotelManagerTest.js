@@ -41,8 +41,17 @@ export const getTestHotelManager = async (req, res) => {
         .catch((error) => {
           res.status(404).json({ status: "no", message: error.message });
         });
-    } else {
-      res.status(404).json({ status: "no", message: "Unauthorized process!" });
+        
+    } else if ((await authorizeHotelManager(token))  & await getHotelManagerId(token) == id) 
+      {
+        await redisClient.del(id);
+        HotelManagerTest.findById(id).then((hmanager) => {
+            redisClient.set(id,JSON.stringify(hmanager));
+            res.status(200).json({status:"ok",fromCache:false,data:hmanager})
+        }).catch((error) => {res.status(404).json({ status: "no", message: error.message });})
+      }
+    else {
+      res.status(404).json({ status: "no", message: "Unauthorized process!",token });
     }
   } catch (error) {
     res.status(404).json({ status: "no", message: error.message });
