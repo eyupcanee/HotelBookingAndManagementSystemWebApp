@@ -29,11 +29,23 @@ const ProtectedRoute = ({ children, accessBy, authType }) => {
    if (authType === "user") {
     if (accessBy === "non-authenticated") {
       if (!user) return children;
-      else ; return <Navigate to={"/user/dashboard"}/>
+      else ; return <Navigate to={"/"}/>
     } else if (accessBy === "authenticated") {
       if (user) return children;
-      else return <Navigate to={"/user/login"}/>
-    } else return <Navigate to={"/user/login"}/>
+      else return <Navigate to={"/login"}/>
+    } else return <Navigate to={"/login"}/>
+  } else if (authType === "all") {
+    if(accessBy === "non-authenticated") {
+      if(!user) return children;
+      //else if (!admin) return children;
+      //else if (!hotelManager) return children;
+      else return <Navigate to={"/"}/>
+    }else if (accessBy === "authenticated") {
+      if (user) return children;
+      //else if (admin) return children;
+      //else if (hotelManager) return children;
+      else return  <Navigate to={"/login"}/>
+    }
   }
 };
 

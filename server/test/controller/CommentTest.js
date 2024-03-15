@@ -75,8 +75,8 @@ export const addTestComment = async (req, res) => {
   const { token } = req.params;
   try {
     if (await authorizeAdmin(token)) {
-      const { hotelId, comment } = req.body;
-      const userId = await getAdminId(token);
+      const { hotelId,userId, comment } = req.body;
+      
       const newTestComment = new CommentTest({
         userId,
         hotelId,

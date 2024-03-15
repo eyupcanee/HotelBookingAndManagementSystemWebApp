@@ -5,6 +5,7 @@ import HotelDetail from "./pages/HotelDetail/HotelDetail";
 import ProtectedRoute from "./context/ProtectedRoute";
 import MakeReservation from "./pages/MakeReservation/MakeReservation";
 import LoginUser from "./pages/LoginUser/LoginUser";
+import LoginRoute from "./pages/LoginRoute/LoginRoute";
 import { AuthProvider } from "./context/AuthProvider";
 function App() {
   return (
@@ -20,6 +21,12 @@ function App() {
             <MakeReservation/>
           </ProtectedRoute>
           }/>
+          <Route path="/login" element={
+          <ProtectedRoute accessBy={"non-authenticated"} authType={"all"}>
+              <LoginRoute/>
+            </ProtectedRoute>}>
+            
+          </Route>
           <Route path="/user/login" element={
             <ProtectedRoute authType="user" accessBy="non-authenticated">
               <LoginUser/>

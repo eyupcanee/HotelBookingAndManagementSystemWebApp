@@ -10,21 +10,39 @@ import Title from "../../components/Title/Title";
 import { Thumbs, Navigation,Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { getFacility } from "../../api/hotelApi";
-import { getRoomsByHotel } from "../../api/hotelApi";
+import { getRoomsByHotel,getCommentsByHotel } from "../../api/hotelApi";
+import { getUserAsAdmin } from "../../api/userApi";
 
 const HotelDetail = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [facilities, setFacilities] = useState([]);
   const [rooms,setRooms] = useState([])
+  const [comments,setComments] = useState([])
   const { id } = useParams();
-
+  var token  = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZTM2MzJlMDQ5YzYyOGE1YmEzNWVmMiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwOTQwMTAwN30.BGWqn4MDc65i_vkAo7i9Xm1EDGGMg7Jr5e8Ff2GHo3"
   const [thumbs, setThumbs] = useState(null);
   useEffect(() => {
     const getData = async () => {
       const result = await getHotel(id);
       console.log(result.data.data);
       setData(result.data.data);
+
+      const getCommentsData = async () => {
+        const result = await getCommentsByHotel(id);
+        console.log(result.data.data);
+        await result.data.data.map((async (item,index) => {
+          console.log(item);
+          const result = await getUserAsAdmin(item.userId,token);
+          console.log(result);
+          const comment = {
+            user:result.data.data,
+            comment:item.comment
+          }
+          console.log(comment);
+          setComments((prevComments) => [...prevComments,comment])
+        }))
+      }
 
       await result.data.data.facilities.map(async (facility, index) => {
         const result = await getFacility(facility);
@@ -33,6 +51,7 @@ const HotelDetail = () => {
           ...prevFacilities,
           result.data.data,
         ]);
+        getCommentsData();
       });
 
       const roomResult = await getRoomsByHotel(id);
@@ -182,7 +201,30 @@ const HotelDetail = () => {
           })}
         </div>
       </div>
+      <div className="title-main">
+        <Title title={"Yorumlar"} description={"Diğer kullanıcıların fikirlerini okuyun"}/>
+      </div>
+      <div className="comments">
+        <div className="container">
+        {comments.slice(0, Math.ceil(facilities.length / 2)).map((comment,index) => {
+          return (
+            <div className="comment">
+            <div className="image" style={{backgroundImage:`url(${comment.user.profilePicture})`}}>
+            
+          </div>
+          <div className="comment-info">
+            <h1>{comment.user.firstName} {comment.user.lastName}</h1>
+            <p>{comment.comment}</p>
+          </div>
+          
+          </div>
+          )
+        })}
+        </div>
+        </div>
+      
       <Footer />
+
     </>
   );
 };

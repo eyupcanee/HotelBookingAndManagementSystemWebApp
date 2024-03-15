@@ -93,7 +93,7 @@ if(loading) {
         <div className="links">
           <Link to={"/"}>Ana Sayfa</Link>
           <Link to={"/list"}>Oteller</Link>
-          <Link to={"/user/login"}>Giriş Yap</Link>
+          <Link to={"/login"}>Giriş Yap</Link>
           <Link >Kaydol</Link>
         </div>
       </div>

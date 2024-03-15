@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }) => {
       if(res.data.status !== "no"){
         sessionStorage.removeItem("userProfile");
         setUser(null);
-        navigate("/user/login");
+        navigate("/login");
       }
     })
   }
