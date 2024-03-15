@@ -34,9 +34,7 @@ const ProtectedRoute = ({ children, accessBy, authType }) => {
     } else return <Navigate to={"/login"}/>
   } else if (authType === "all") {
     if(accessBy === "non-authenticated") {
-      if(!user) return children;
-      else if (!admin) return children;
-      else if (!hotelManager) return children;
+      if(!user & !admin & !hotelManager) return children 
       else return <Navigate to={"/"}/>
     }else if (accessBy === "authenticated") {
       if (user) return children;
