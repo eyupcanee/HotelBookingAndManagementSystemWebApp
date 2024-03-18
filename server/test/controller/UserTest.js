@@ -13,11 +13,20 @@ import { v2 as cloudinary } from "cloudinary";
 import redisClient from "../../cache/RedisConfigration.js";
 
 dotenv.config({ path: "../../.env.development.local" });
+var c_name;
+var a_key;
+var s_key;
+async () => {
+  c_name = "dknqfhayy";
+  a_key = "dknqfhayy";
+  s_key = process.env.CLOUD_SECRET;
+};
 
 cloudinary.config({
-  cloud_name: process.env.CLOUD_NAME,
-  api_key: process.env.CLOUD_API_KEY,
-  api_secret: process.env.CLOUD_API_SECRET,
+  cloud_name: "dknqfhayy",
+  api_key: "992737114653158",
+  api_secret: "mZwp6oeqnHgGV7rKkKgCkY5rHF8",
+  secure: false,
 });
 
 (async () => {
@@ -146,24 +155,27 @@ export const registerTestUser = async (req, res) => {
     } = req.body;
     const encryptedPassword = await bcrypt.hash(password, 8);
 
-    if (!profilePicture) {
-      var result = await cloudinary.uploader.upload(req.file.path);
-    }
-
     const newTestUser = new UserTest({
       firstName,
       lastName,
       email,
       password: encryptedPassword,
-      profilePicture: `${result ? result.secure_url : profilePicture}`,
+      profilePicture: `${
+        profilePicture
+          ? profilePicture
+          : `http://localhost:5001/` + req.file.path
+      }`,
       phoneNumber,
     });
 
     await newTestUser.save().then(() => {
-      res.status(200).json({ status: "ok" });
+      res.status(200).json({ status: "ok", message: req.file });
     });
   } catch (error) {
-    res.status(404).json({ status: "no", message: error.message });
+    res.status(404).json({
+      status: "no",
+      message: error.message,
+    });
   }
 };
 

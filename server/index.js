@@ -38,7 +38,7 @@ app.use("/hmanagertest", HotelManagerTestRoutes);
 app.use("/hoteltest", HotelTestRoutes);
 app.use("/roomtest", RoomTestRoutes);
 app.use("/reservationtest", ReservationTestRoutes);
-
+app.use("/uploads", express.static("uploads"));
 // Mongoose Configration
 const PORT = process.env.PORT || 8000;
 mongoose

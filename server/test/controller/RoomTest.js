@@ -86,14 +86,13 @@ export const addTestRoom = async (req, res) => {
         capacity,
         available,
       } = req.body;
-
+      let imageUrls = [{}];
       if (!images || images.length < 1) {
-        const promises = req.files.map((file) =>
-          cloudinary.uploader.upload(file.buffer)
-        );
-        const uploadedResults = await Promise.all(promises);
-
-        var imageUrls = uploadedResults.map((result) => result.secure_url);
+        {
+          req.files.map((file, index) => {
+            imageUrls.append(file);
+          });
+        }
       } else {
         imageUrls = images; // Eğer gelen istekte images dizisi doluysa, onu direkt olarak kullan
       }
