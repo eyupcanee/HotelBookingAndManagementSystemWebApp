@@ -42,10 +42,7 @@ app.use("/uploads", express.static("uploads"));
 // Mongoose Configration
 const PORT = process.env.PORT || 8000;
 mongoose
-  .connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(process.env.MONGO_URL, {})
   .then(() => {
     app.listen(PORT, () => console.log(`Server Port : ${PORT}`));
   })

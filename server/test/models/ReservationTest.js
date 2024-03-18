@@ -35,7 +35,7 @@ const ReservationTestSchema = new mongoose.Schema(
     },
     confirmation: {
       type: Boolean,
-      default: false,
+      default: null,
     },
   },
   { timestamps: true }
