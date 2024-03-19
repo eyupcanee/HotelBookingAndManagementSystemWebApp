@@ -10,6 +10,7 @@ import { AuthProvider } from "./context/AuthProvider";
 import LoginAdmin from "./pages/LoginAdmin/LoginAdmin";
 import LoginHotelManager from "./pages/LoginHotelManager/LoginHotelManager";
 import Register from "./pages/Register/Register";
+import UserReservations from "./pages/UserReservations/UserReservations";
 function App() {
   return (
     <div className="App">
@@ -70,6 +71,14 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/user/reservations"
+              element={
+                <ProtectedRoute authType="user" accessBy="authenticated">
+                  <UserReservations />
+                </ProtectedRoute>
+              }
+            ></Route>
           </Routes>
         </AuthProvider>
       </BrowserRouter>

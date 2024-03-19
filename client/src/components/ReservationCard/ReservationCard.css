@@ -1,0 +1,50 @@
+.roomSlide img {
+  width: 100%;
+  height: auto;
+}
+
+.reservationDetail h1 {
+  margin-top: 0;
+}
+
+.confirmationStatus {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+
+.confirmBox {
+  display: flex;
+  align-items: center;
+  width: 300px;
+  height: 50px;
+  border: 3px solid black;
+  justify-content: center;
+  text-align: center;
+  color: black;
+}
+
+.confirmBox h1 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.confirmBox.confirmed {
+  color: green;
+  border-color: green;
+}
+
+.confirmBox.unconfirmed {
+  color: red;
+  border-color: red;
+}
+
+.confirmBox.waiting {
+  border-color: #f6d038;
+  color: #f6d038;
+}
+
+.reservationDetail span {
+  font-weight: 600;
+}

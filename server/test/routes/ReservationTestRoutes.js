@@ -22,7 +22,7 @@ router.post("/addreservation/:token", addTestReservation);
 router.get("/get/:id/:token", getTestReservationCached, getTestReservation);
 router.get("/get/:token", getAllTestReservationsCached, getAllTestReservations);
 router.get("/get/hotel/:token", getTestReservationsByHotel);
-router.get("/get/user/:token", getTestReservationsByUser);
+router.get("/get/user/:userId/:token", getTestReservationsByUser);
 router.get("/get/confirmation/:token", getTestReservationsByConfirmation);
 router.get(
   "/get/user/confirmation/:token",

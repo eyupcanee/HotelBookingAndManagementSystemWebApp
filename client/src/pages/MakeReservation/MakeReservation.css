@@ -1,0 +1,73 @@
+.addReservation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+}
+
+.addReservationSlide {
+  width: 400px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.reservationInputs {
+  margin-top: 40px;
+}
+
+.reservationForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  color: black;
+  font-size: 1.5rem;
+}
+
+.reservationForm label {
+  margin-bottom: 10px;
+}
+
+.reservationForm input {
+  background-color: transparent;
+  padding: 10px 30px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.reservationForm select {
+  background-color: transparent;
+  padding: 10px 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.addReservation p {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.addReservation p span {
+  font-weight: 600;
+}
+
+.btn-addReservation {
+  margin-top: 40px;
+  border: 1px solid black;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1.2rem;
+  padding: 15px 80px;
+  background-color: black;
+  cursor: pointer;
+  color: white;
+  transition: all 0.5s ease;
+}
+
+.reservationForm button:hover {
+  background-color: white;
+  color: black;
+}

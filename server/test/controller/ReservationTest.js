@@ -217,8 +217,7 @@ export const addTestReservation = async (req, res) => {
 
 export const getTestReservationsByUser = async (req, res) => {
   try {
-    const { token } = req.params;
-    const { userId } = req.body;
+    const { userId, token } = req.params;
     if ((await authorizeAdmin(token)) || (await authorizeHotelManager(token))) {
       const testreservations = await ReservationTest.find({
         userId: userId,

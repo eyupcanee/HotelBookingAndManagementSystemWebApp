@@ -64,7 +64,7 @@ const Register = () => {
   };
 
   return (
-    <div className="row">
+    <div className="row" style={{ "--bs-gutter-x": "0" }}>
       <Header isNotMenu />
       <Hero
         title={"Kayıt Ol"}
