@@ -1,0 +1,94 @@
+.sidebar {
+  flex: 1;
+  border-right: 0.5px solid #ffda85;
+  min-height: 100dvh;
+}
+
+.sidebar .top {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar .top .logo {
+  color: black;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.sidebar hr {
+  height: 0;
+  border: 0.5px solid #ffda85;
+}
+
+.sidebar .center {
+  padding-left: 10px;
+}
+
+.sidebar .center ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar .title {
+  font-size: 10px;
+  font-weight: bold;
+  color: black;
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+.sidebar a {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  cursor: pointer;
+  transition: 0.5s all ease;
+  text-decoration: none;
+}
+
+.sidebar a:hover {
+  color: black !important;
+  background-color: #ffedc2;
+}
+.sidebar a:hover .icon {
+  color: black;
+}
+
+.sidebar a .icon {
+  font-size: 2rem;
+  color: #ffda85;
+  transition: 0.5s all ease;
+}
+
+.sidebar a span {
+  font-size: 1rem;
+  color: black;
+  font-weight: 600;
+  margin-left: 10px;
+}
+
+.bottom {
+  display: flex;
+  align-items: center;
+  margin: 10px;
+}
+
+.bottom .color-option {
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  border: 1px solid #ffda85;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.bottom .color-option:nth-child(1) {
+  background-color: whitesmoke;
+}
+
+.bottom .color-option:nth-child(2) {
+  background-color: #333;
+}

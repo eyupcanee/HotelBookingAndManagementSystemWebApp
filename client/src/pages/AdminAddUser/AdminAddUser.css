@@ -1,0 +1,78 @@
+.admin-list {
+  display: flex;
+  width: 100%;
+}
+
+.admin-list .listContainer {
+  flex: 6;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+  align-self: center;
+  justify-content: center;
+  width: 300px;
+  color: black;
+  min-height: 100%;
+}
+
+.register-form label {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+.register-form label:first-child {
+  margin-top: 0;
+}
+
+.register-form input {
+  width: 300px;
+  padding: 8px 60px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.register-form input[type="file"] {
+  display: none;
+}
+
+.fileInput {
+  width: 300px;
+  padding: 10px 80px;
+  border: 1px solid #ffda85;
+  background-color: black;
+  color: white;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  align-items: center;
+  display: flex;
+  margin-bottom: 10px;
+  transition: all 0.5s ease;
+  font-size: 0.8rem !important;
+  text-align: center;
+  display: inline;
+}
+
+.fileInput:hover {
+  background: #ffda85;
+  color: black;
+}
+
+.register-form button {
+  width: 300px;
+  padding: 10px 80px;
+  border-radius: 8px;
+  border: 1px solid #ffda85;
+  background-color: #ffda85;
+  font-weight: 600;
+  transition: all 0.5s ease;
+  cursor: pointer;
+}
+
+.register-form button:hover {
+  background-color: white;
+  color: black;
+}

@@ -7,3 +7,6 @@ export const getReservatşonsByUser = (userId, token) =>
 
 export const addReservation = (reservation, token) =>
   axios.post(`${baseUrl}/reservationtest/addreservation/${token}`, reservation);
+
+export const getAllReservations = (token) =>
+  axios.get(`${baseUrl}/reservationtest/get/${token}`);

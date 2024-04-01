@@ -11,6 +11,12 @@ import LoginAdmin from "./pages/LoginAdmin/LoginAdmin";
 import LoginHotelManager from "./pages/LoginHotelManager/LoginHotelManager";
 import Register from "./pages/Register/Register";
 import UserReservations from "./pages/UserReservations/UserReservations";
+import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
+import AdminUserListPage from "./pages/AdminUserListPage/AdminUserListPage";
+import AdminHotelsListPage from "./pages/AdminHotelsListPage/AdminHotelsListPage";
+import AdminHotelManagersListPage from "./pages/AdminHotelManagersListPage/AdminHotelManagersListPage";
+import AdminReservationListPage from "./pages/AdminReservationListPage/AdminReservationListPage";
+import AdminAddUser from "./pages/AdminAddUser/AdminAddUser";
 function App() {
   return (
     <div className="App">
@@ -76,6 +82,69 @@ function App() {
               element={
                 <ProtectedRoute authType="user" accessBy="authenticated">
                   <UserReservations />
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              path="/dashboardtest"
+              element={<AdminUserListPage />}
+            ></Route>
+            <Route
+              path="/hotelmanager/dashboard"
+              element={
+                <ProtectedRoute
+                  authType="hotelManager"
+                  accessBy="authenticated"
+                >
+                  <AdminDashboard />
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              path="/admin/dashboard"
+              element={
+                <ProtectedRoute authType="admin" accessBy="authenticated">
+                  <AdminDashboard />
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              path="/admin/users"
+              element={
+                <ProtectedRoute authType="admin" accessBy="authenticated">
+                  <AdminUserListPage />
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              path="/admin/hotels"
+              element={
+                <ProtectedRoute authType="admin" accessBy="authenticated">
+                  <AdminHotelsListPage />
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              path="/admin/hotelmanagers"
+              element={
+                <ProtectedRoute authType="admin" accessBy="authenticated">
+                  <AdminHotelManagersListPage />
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              path="/admin/reservations"
+              element={
+                <ProtectedRoute authType="admin" accessBy="authenticated">
+                  <AdminReservationListPage />
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              path="/admin/adduser"
+              element={
+                <ProtectedRoute authType="admin" accessBy="authenticated">
+                  <AdminAddUser />
                 </ProtectedRoute>
               }
             ></Route>

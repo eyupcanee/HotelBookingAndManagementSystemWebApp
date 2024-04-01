@@ -9,6 +9,8 @@ export const getFacilities = () => axios.get(`${baseUrl}/facilitytest/getall`);
 
 export const getHotel = (id) => axios.get(`${baseUrl}/hoteltest/get/${id}`);
 
+export const getAllHotels = () => axios.get(`${baseUrl}/hoteltest/get`);
+
 export const getFacility = (id) =>
   axios.get(`${baseUrl}/facilitytest/get/${id}`);
 
