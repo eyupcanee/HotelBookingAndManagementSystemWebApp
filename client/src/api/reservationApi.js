@@ -10,3 +10,17 @@ export const addReservation = (reservation, token) =>
 
 export const getAllReservations = (token) =>
   axios.get(`${baseUrl}/reservationtest/get/${token}`);
+
+export const getAllReservationsByManager = (managerId, token) =>
+  axios.get(`${baseUrl}/reservationtest/get/manager/${managerId}/${token}`);
+
+export const getAllReservationsByManagerAndUnconfirmed = (managerId, token) =>
+  axios.get(
+    `${baseUrl}/reservationtest/get/manager/unconfirmed/${managerId}/${token}`
+  );
+
+export const confirmReservation = (id, token) =>
+  axios.get(`${baseUrl}/reservationtest/confirm/${id}/${token}`);
+
+export const rejectReservation = (id, token) =>
+  axios.get(`${baseUrl}/reservationtest/reject/${id}/${token}`);

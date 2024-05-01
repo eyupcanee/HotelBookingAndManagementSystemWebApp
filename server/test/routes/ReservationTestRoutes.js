@@ -8,7 +8,11 @@ import {
   getTestReservationsByConfirmationFromUser,
   getTestReservationsByHotel,
   getTestReservationsByUser,
+  getTestReservationsByManager,
   deleteTestReservation,
+  confirmReservation,
+  rejectReservation,
+  getTestReservationsByManagerAndUnconfirmed,
 } from "../controller/ReservationTest.js";
 
 import {
@@ -28,6 +32,16 @@ router.get(
   "/get/user/confirmation/:token",
   getTestReservationsByConfirmationFromUser
 );
+
+router.get("/get/manager/:managerId/:token", getTestReservationsByManager);
+router.get(
+  "/get/manager/unconfirmed/:managerId/:token",
+  getTestReservationsByManagerAndUnconfirmed
+);
+
 router.delete("/del/:id/:token", deleteTestReservation);
+
+router.get("/confirm/:id/:token", confirmReservation);
+router.get("/reject/:id/:token", rejectReservation);
 
 export default router;

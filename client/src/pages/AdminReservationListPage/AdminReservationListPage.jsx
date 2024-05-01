@@ -30,7 +30,7 @@ const AdminReservationListPage = () => {
       <div className="listContainer">
         <Navbar />
         <h2 style={{ padding: "20px", paddingBottom: "0" }}>Rezervasyonlar</h2>
-        <Datatable data={users} />
+        <Datatable data={users} dataInfo={"reservationadmin"} />
       </div>
     </div>
   );

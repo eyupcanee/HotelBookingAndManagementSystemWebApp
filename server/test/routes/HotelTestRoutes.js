@@ -21,8 +21,8 @@ const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./uploads/");
   },
-  filnename: function (req, file, cb) {
-    cb(null, Date.now() + "-" + file.originalName);
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname);
   },
 });
 
@@ -42,7 +42,7 @@ const upload = multer({ storage: storage, fileFilter: fileFilter });
 
 const router = express.Router();
 
-router.post("/addhotel/:token", upload.array("images"), addTestHotel);
+router.post("/addhotel/:token", upload.any("images"), addTestHotel);
 router.get("/get/:id", getTestHotelCached, getTestHotel);
 router.get("/get", getAllHotelsCached, getAllTestHotels);
 router.get(

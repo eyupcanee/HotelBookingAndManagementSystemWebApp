@@ -3,19 +3,33 @@ import "./Datatable.css";
 import { DataGrid } from "@mui/x-data-grid";
 import { useState, useEffect } from "react";
 import { deleteUser } from "../../api/userApi";
-import { useNavigate } from "react-router";
+import { deleteHotelManager } from "../../api/hotelManagerApi";
+import {
+  confirmReservation,
+  rejectReservation,
+} from "../../api/reservationApi";
 
 const Datatable = ({ data, dataInfo }) => {
   const [rows, setRows] = useState([]);
   const [columns, setColumns] = useState([]);
-  const navigate = useNavigate();
   const handleDelete = (id) => {
     if (sessionStorage.getItem("adminProfile") && dataInfo === "user") {
       deleteUser(id, sessionStorage.getItem("adminProfile"));
       const updatedRows = rows.filter((row) => row.id !== id);
 
       setRows(updatedRows);
-      navigate("/admin/users");
+      window.location.reload();
+
+      console.log(`Deleting row with id ${id}`);
+    } else if (
+      sessionStorage.getItem("adminProfile") &&
+      dataInfo === "hotelmanager"
+    ) {
+      deleteHotelManager(id, sessionStorage.getItem("adminProfile"));
+      const updatedRows = rows.filter((row) => row.id !== id);
+
+      setRows(updatedRows);
+      window.location.reload();
 
       console.log(`Deleting row with id ${id}`);
     }
@@ -23,6 +37,22 @@ const Datatable = ({ data, dataInfo }) => {
 
   const handleUpdate = (id) => {
     console.log(`Updating row with id ${id}`);
+  };
+
+  const handleReject = async (id) => {
+    const token = sessionStorage.getItem("hotelManagerProfile");
+    if (token) {
+      await rejectReservation(id, token);
+      window.location.reload();
+    }
+  };
+
+  const handleConfirm = async (id) => {
+    const token = sessionStorage.getItem("hotelManagerProfile");
+    if (token) {
+      await confirmReservation(id, token);
+      window.location.reload();
+    }
   };
 
   useEffect(() => {
@@ -40,15 +70,29 @@ const Datatable = ({ data, dataInfo }) => {
         width: key === "profilePicture" ? 100 : undefined,
         flex: 1,
         renderCell: (params) => {
-          return key === "profilePicture" ? (
-            <img
-              src={params.value}
-              alt="Profile"
-              style={{ width: 50, height: 50, objectFit: "cover" }}
-            />
-          ) : (
-            <span>{params.value}</span>
-          );
+          if (key === "confirmation") {
+            if (params.value === null) {
+              return (
+                <span style={{ color: "black", fontWeight: "600" }}>---</span>
+              );
+            } else {
+              return (
+                <span style={{ color: params.value ? "green" : "red" }}>
+                  {params.value ? "✔️" : "❌"}
+                </span>
+              );
+            }
+          } else if (key === "profilePicture") {
+            return (
+              <img
+                src={params.value}
+                alt="Profile"
+                style={{ width: 50, height: 50, objectFit: "cover" }}
+              />
+            );
+          } else {
+            return <span>{params.value}</span>;
+          }
         },
       }));
     columnsFromData.push({
@@ -74,7 +118,45 @@ const Datatable = ({ data, dataInfo }) => {
         );
       },
     });
-    setColumns(columnsFromData);
+
+    if (dataInfo === "reservationmanager") {
+      columnsFromData.push({
+        field: "confirm",
+        headerName: "Confirm Actions",
+        width: 200,
+        renderCell: (params) => {
+          return (
+            <div>
+              <button
+                className="delete-button"
+                onClick={() => handleReject(params.id)}
+              >
+                Reject
+              </button>
+              <button
+                className="update-button"
+                onClick={() => handleConfirm(params.id)}
+              >
+                Confirm
+              </button>
+            </div>
+          );
+        },
+      });
+    }
+
+    if (
+      dataInfo === "hoteladmin" ||
+      dataInfo === "reservationadmin" ||
+      dataInfo === "reservationmanager"
+    ) {
+      const filteredColumns = columnsFromData.filter(
+        (column) => column.field !== "actions"
+      );
+      setColumns(filteredColumns);
+    } else {
+      setColumns(columnsFromData);
+    }
 
     setRows(
       data.map((row, index) => ({

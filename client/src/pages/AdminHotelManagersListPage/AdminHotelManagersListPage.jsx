@@ -32,7 +32,7 @@ const AdminHotelManagersListPage = () => {
         <h2 style={{ padding: "20px", paddingBottom: "0" }}>
           Otel Yöneticileri
         </h2>
-        <Datatable data={users} />
+        <Datatable data={users} dataInfo={"hotelmanager"} />
       </div>
     </div>
   );

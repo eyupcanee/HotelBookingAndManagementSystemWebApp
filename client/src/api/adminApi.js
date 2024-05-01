@@ -6,4 +6,5 @@ export const loginAdmin =  (admin) => axios.post(`${baseUrl}/admintest/login`,ad
 
 export const logoutAdmin = (token) => axios.post(`${baseUrl}/admintest/logout/${token}`);
 
-export const getAdmin = (id,token) => axios.get(`${baseUrl}/admintest/get/${id}/${token}`);
+export const getAdmin = (id,token) => axios.get(`${baseUrl}/admintest/get/${id}/${token}`).then().catch((error) => {});
+

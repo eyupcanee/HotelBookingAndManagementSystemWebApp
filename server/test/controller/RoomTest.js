@@ -74,6 +74,7 @@ export const getAllTestRooms = async (req, res) => {
 };
 
 export const addTestRoom = async (req, res) => {
+  const { hotelId, description } = req.body;
   try {
     const { token } = req.params;
     if (await authorizeAdmin(token)) {
@@ -86,15 +87,13 @@ export const addTestRoom = async (req, res) => {
         capacity,
         available,
       } = req.body;
-      let imageUrls = [{}];
-      if (!images || images.length < 1) {
-        {
-          req.files.map((file, index) => {
-            imageUrls.append(file);
-          });
-        }
+      let imageList;
+      if (req.files) {
+        imageList = req.files.map((file) => {
+          return `http://localhost:5001/` + file.path;
+        });
       } else {
-        imageUrls = images; // Eğer gelen istekte images dizisi doluysa, onu direkt olarak kullan
+        imageList = images;
       }
 
       const newTestRoom = new RoomTest({
@@ -102,7 +101,7 @@ export const addTestRoom = async (req, res) => {
         description,
         pricePerNight,
         facilities,
-        images: imageUrls,
+        images: imageList,
         capacity,
         available,
       });
@@ -115,7 +114,7 @@ export const addTestRoom = async (req, res) => {
       const managershotels = await HotelTest.find({
         managerId: managerId,
       }).select("_id");
-      const { hotelId } = req.body;
+      const { hotelId, description } = req.body;
       const hotelIds = managershotels.map((hotel) => hotel._id.toString());
       if (hotelIds.includes(hotelId)) {
         const {
@@ -128,13 +127,13 @@ export const addTestRoom = async (req, res) => {
           available,
         } = req.body;
 
-        if (!images || images.length < 1) {
-          const promises = req.files.map((file) =>
-            cloudinary.uploader.upload(file.buffer)
-          );
-          const uploadedResults = await Promise.all(promises);
-
-          var imageUrls = uploadedResults.map((result) => result.secure_url);
+        let imageList;
+        if (req.files) {
+          imageList = req.files.map((file) => {
+            return `http://localhost:5001/` + file.path;
+          });
+        } else {
+          imageList = images;
         }
 
         const newTestRoom = new RoomTest({
@@ -142,7 +141,7 @@ export const addTestRoom = async (req, res) => {
           description,
           pricePerNight,
           facilities,
-          images: `${!images || images.length < 1 ? imageUrls : images}`,
+          images: imageList,
           capacity,
           available,
         });
@@ -151,12 +150,20 @@ export const addTestRoom = async (req, res) => {
           res.status(200).json({ status: "ok" });
         });
       } else {
-        res
-          .status(404)
-          .json({ status: "no", message: "Unauthorized process!" });
+        res.status(404).json({
+          status: "no",
+          message: "Unauthorized process!",
+          hotel: hotelId,
+          msg: "test",
+          desc: description,
+        });
       }
     } else {
-      res.status(404).json({ status: "no", message: "Unauthorized process!" });
+      res.status(404).json({
+        status: "no",
+        message: "Unauthorized process!",
+        hotel: hotelId,
+      });
     }
   } catch (error) {
     res.status(404).json({ status: "no", message: error.message });

@@ -7,6 +7,7 @@ import {
   getTestHotelManager,
   loginTestHotelManagers,
   logoutTestAdmin,
+  deleteHotelManager,
 } from "../controller/HotelManagerTest.js";
 
 import {
@@ -52,5 +53,6 @@ router.get(
   getAllTestHotelManagersCached,
   getAllTestHotelManagers
 );
+router.delete("/delete/:id/:token", deleteHotelManager);
 
 export default router;

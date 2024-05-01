@@ -13,3 +13,9 @@ export const getHotelManager = (id, token) =>
 
 export const getAllHotelManagers = (token) =>
   axios.get(`${baseUrl}/hmanagertest/get/${token}`);
+
+export const addHotelManager = (hotelManager, token) =>
+  axios.post(`${baseUrl}/hmanagertest/addhmanager/${token}`, hotelManager);
+
+export const deleteHotelManager = (id, token) =>
+  axios.delete(`${baseUrl}/hmanagertest/delete/${id}/${token}`);

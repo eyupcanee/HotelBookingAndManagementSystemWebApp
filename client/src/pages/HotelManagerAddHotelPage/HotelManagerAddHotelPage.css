@@ -1,0 +1,18 @@
+.addhotelpage-facilities {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 10px;
+}
+
+.addhotelpage-facilities input {
+  width: 120px;
+}
+
+.addhotelpage-facility {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}

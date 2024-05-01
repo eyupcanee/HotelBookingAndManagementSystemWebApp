@@ -74,6 +74,15 @@ export const getAllTestHotels = async (req, res) => {
 };
 
 export const addTestHotel = async (req, res) => {
+  const { facilities, images } = req.body;
+  let imageList;
+  if (req.files) {
+    imageList = req.files.map((file) => {
+      return `http://localhost:5001/` + file.path;
+    });
+  } else {
+    imageList = images;
+  }
   try {
     const { token } = req.params;
     if (await authorizeAdmin(token)) {
@@ -90,16 +99,13 @@ export const addTestHotel = async (req, res) => {
         images,
         facilities,
       } = req.body;
-
-      if (!images || images.length < 1) {
-        const promises = req.files.map((file) =>
-          cloudinary.uploader.upload(file.buffer)
-        );
-        const uploadedResults = await Promise.all(promises);
-
-        var imageUrls = uploadedResults.map((result) => result.secure_url);
+      let imageList;
+      if (req.files) {
+        imageList = req.files.map((file) => {
+          return `http://localhost:5001/` + file.path;
+        });
       } else {
-        imageUrls = images; // Eğer gelen istekte images dizisi doluysa, onu direkt olarak kullan
+        imageList = images;
       }
 
       const newTestHotel = new HotelTest({
@@ -112,12 +118,12 @@ export const addTestHotel = async (req, res) => {
         addressDetail,
         phoneNumber,
         averagePrice,
-        images: imageUrls,
+        images: imageList,
         facilities,
       });
 
       await newTestHotel.save().then(() => {
-        res.status(200).json({ status: "ok" });
+        res.status(200).json({ status: "ok", data: facilities });
       });
     } else if (await authorizeHotelManager(token)) {
       const managerId = await getHotelManagerId(token);
@@ -134,13 +140,12 @@ export const addTestHotel = async (req, res) => {
         facilities,
       } = req.body;
 
-      if (!images || length(images) < 1) {
-        const promises = req.files.map((file) =>
-          cloudinary.uploader.upload(file.buffer)
-        );
-        const uploadedResults = await Promise.all(promises);
-
-        var imageUrls = uploadedResults.map((result) => result.secure_url);
+      let imageList;
+      if (req.files) {
+        imageList = req.files.map((file) => {
+          return `http://localhost:5001/` + file.path;
+        });
+      } else {
       }
 
       const newTestHotel = new HotelTest({
@@ -153,18 +158,26 @@ export const addTestHotel = async (req, res) => {
         addressDetail,
         phoneNumber,
         averagePrice,
-        images: imageUrls,
+        images: imageList,
         facilities,
       });
 
       await newTestHotel.save().then(() => {
-        res.status(200).json({ status: "ok" });
+        res.status(200).json({
+          status: "ok",
+          data: facilities,
+          img: imageList,
+          raw: images,
+          files: req.files,
+        });
       });
     } else {
       res.status(404).json({ status: "no", message: "Unauthorized process!" });
     }
   } catch (error) {
-    res.status(404).json({ status: "no", message: error.message });
+    res
+      .status(404)
+      .json({ status: "no", message: error.message, data: facilities });
   }
 };
 

@@ -1,5 +1,6 @@
 import ReservationTest from "../models/ReservationTest.js";
 import HotelTest from "../models/HotelTest.js";
+import UserTest from "../models/UserTest.js";
 import { jwtDecode } from "jwt-decode";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
@@ -338,6 +339,153 @@ export const getTestReservationsByConfirmationFromUser = async (req, res) => {
           .status(404)
           .json({ status: "no", message: "Unauthorized process!" });
       }
+    } else {
+      res.status(404).json({ status: "no", message: "Unauthorized process!" });
+    }
+  } catch (error) {
+    res.status(404).json({ status: "no", message: error.message });
+  }
+};
+
+export const getTestReservationsByManager = async (req, res) => {
+  try {
+    const { managerId, token } = req.params;
+    if (await authorizeHotelManager(token)) {
+      const managershotels = await HotelTest.find({
+        managerId: managerId,
+      }).select("_id");
+      const hotelIds = managershotels.map((hotel) => hotel._id.toString());
+
+      const testreservations = await ReservationTest.find({
+        hotelId: { $in: hotelIds },
+      });
+
+      const reservationsToList = [];
+      for (const reservation of testreservations) {
+        const hotelId = reservation.hotelId;
+        const userId = reservation.userId;
+
+        const hotel = await HotelTest.findById(hotelId);
+        const user = await UserTest.findById(userId);
+
+        reservationsToList.push({
+          ...reservation.toObject(),
+          hotelName: hotel ? hotel.hotelName : "",
+          user: user ? user.firstName + " " + user.lastName : "",
+        });
+      }
+
+      res.status(200).json({ status: "ok", data: reservationsToList });
+    } else {
+      res.status(404).json({ status: "no", message: "Unauthorized process!" });
+    }
+  } catch (error) {
+    res.status(404).json({ status: "no", message: error.message });
+  }
+};
+
+export const confirmReservation = async (req, res) => {
+  try {
+    const { id, token } = req.params;
+    if (await authorizeAdmin(token)) {
+      ReservationTest.findByIdAndUpdate(id, { confirmation: true }).then(() =>
+        res.status(200).json({ status: "ok" })
+      );
+    } else if (await authorizeHotelManager(token)) {
+      const managerId = await getHotelManagerId(token);
+      const reservation = await ReservationTest.findById(id);
+      const hotel = await HotelTest.findById(reservation.hotelId);
+
+      if (hotel.managerId == managerId) {
+        ReservationTest.findByIdAndUpdate(id, { confirmation: true }).then(() =>
+          res.status(200).json({ status: "ok" })
+        );
+      } else {
+        res
+          .status(404)
+          .json({ status: "no", message: "Unauthorized process!" });
+      }
+    } else {
+      res.status(404).json({ status: "no", message: "Unauthorized process!" });
+    }
+  } catch (error) {
+    res.status(404).json({ status: "no", message: error.message });
+  }
+};
+
+export const rejectReservation = async (req, res) => {
+  try {
+    const { id, token } = req.params;
+    if (await authorizeAdmin(token)) {
+      ReservationTest.findByIdAndUpdate(id, { confirmation: false }).then(() =>
+        res.status(200).json({ status: "ok" })
+      );
+    } else if (await authorizeHotelManager(token)) {
+      const managerId = await getHotelManagerId(token);
+      const reservation = await ReservationTest.findById(id);
+      const hotel = await HotelTest.findById(reservation.hotelId);
+
+      if (hotel.managerId == managerId) {
+        ReservationTest.findByIdAndUpdate(id, { confirmation: false }).then(
+          () => res.status(200).json({ status: "ok" })
+        );
+      } else {
+        res.status(404).json({
+          status: "no",
+          message: "Unauthorized process!",
+          msg: "test",
+        });
+      }
+    } else {
+      res.status(404).json({ status: "no", message: "Unauthorized process!" });
+    }
+  } catch (error) {
+    res.status(404).json({ status: "no", message: error.message });
+  }
+};
+
+export const getTestReservationsByManagerAndUnconfirmed = async (req, res) => {
+  try {
+    const { managerId, token } = req.params;
+    if (await authorizeHotelManager(token)) {
+      const managershotels = await HotelTest.find({
+        managerId: managerId,
+      }).select("_id");
+      const hotelIds = managershotels.map((hotel) => hotel._id.toString());
+
+      const testreservations = await ReservationTest.find({
+        hotelId: { $in: hotelIds },
+        $or: [
+          { confirmation: null },
+          { confirmation: false }, // Boş veya tanımlanmamış olanları da dikkate al
+        ],
+      });
+
+      const reser = await ReservationTest.find({
+        confirmation: null,
+      });
+
+      const reservationsToList = [];
+      for (const reservation of testreservations) {
+        const hotelId = reservation.hotelId;
+        const userId = reservation.userId;
+
+        const hotel = await HotelTest.findById(hotelId);
+        const user = await UserTest.findById(userId);
+
+        reservationsToList.push({
+          ...reservation.toObject(),
+          hotelName: hotel ? hotel.hotelName : "",
+          user: user ? user.firstName + " " + user.lastName : "",
+        });
+      }
+
+      res.status(200).json({
+        status: "ok",
+        data: reservationsToList,
+        data2: testreservations,
+        data3: reser,
+      });
     } else {
       res.status(404).json({ status: "no", message: "Unauthorized process!" });
     }

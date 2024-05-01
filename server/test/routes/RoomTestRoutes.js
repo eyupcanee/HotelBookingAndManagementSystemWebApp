@@ -44,7 +44,7 @@ const upload = multer({ storage: storage, fileFilter: fileFilter });
 
 const router = express.Router();
 
-router.post("/addroom/:token", addTestRoom);
+router.post("/addroom/:token", upload.any("images"), addTestRoom);
 router.get("/get/:id", getTestRoomCached, getTestRoom);
 router.get("/get", getAllRoomsCached, getAllTestRooms);
 router.get("/get/hotel/:hotelId", getTestRoomsByHotel);

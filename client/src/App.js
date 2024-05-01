@@ -17,6 +17,13 @@ import AdminHotelsListPage from "./pages/AdminHotelsListPage/AdminHotelsListPage
 import AdminHotelManagersListPage from "./pages/AdminHotelManagersListPage/AdminHotelManagersListPage";
 import AdminReservationListPage from "./pages/AdminReservationListPage/AdminReservationListPage";
 import AdminAddUser from "./pages/AdminAddUser/AdminAddUser";
+import AdminAddHotelManager from "./pages/AdminAddHotelManager/AdminAddHotelManager";
+import HotelManagerHotelsListPage from "./pages/HotelManagerHotelsListPage/HotelManagerHotelsListPage";
+import HotelManagerReservationsListPage from "./pages/HotelManagerReservationsListPage/HotelManagerReservationsListPage";
+import HotelManagerAddHotelPage from "./pages/HotelManagerAddHotelPage/HotelManagerAddHotelPage";
+import HotelManagerRoomListPage from "./pages/HotelManagerRoomListPage/HotelManagerRoomListPage";
+import HotelManagerAddRoom from "./pages/HotelManagerAddRoom/HotelManagerAddRoom";
+import HotelManagerConfirmReservation from "./pages/HotelManagerConfirmReservation/HotelManagerConfirmReservation";
 function App() {
   return (
     <div className="App">
@@ -145,6 +152,80 @@ function App() {
               element={
                 <ProtectedRoute authType="admin" accessBy="authenticated">
                   <AdminAddUser />
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              path="/admin/addhotelmanager"
+              element={
+                <ProtectedRoute authType="admin" accessBy="authenticated">
+                  <AdminAddHotelManager />
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              path="/hotelmanager/hotels"
+              element={
+                <ProtectedRoute
+                  authType="hotelManager"
+                  accessBy="authenticated"
+                >
+                  <HotelManagerHotelsListPage />
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              path="/hotelmanager/addhotel"
+              element={
+                <ProtectedRoute
+                  authType="hotelManager"
+                  accessBy="authenticated"
+                >
+                  <HotelManagerAddHotelPage />
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              path="/hotelmanager/rooms"
+              element={
+                <ProtectedRoute
+                  authType="hotelManager"
+                  accessBy="authenticated"
+                >
+                  <HotelManagerRoomListPage />
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              path="/hotelmanager/addroom"
+              element={
+                <ProtectedRoute
+                  authType="hotelManager"
+                  accessBy="authenticated"
+                >
+                  <HotelManagerAddRoom />
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              path="/hotelmanager/reservations"
+              element={
+                <ProtectedRoute
+                  authType="hotelManager"
+                  accessBy="authenticated"
+                >
+                  <HotelManagerReservationsListPage />
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              path="/hotelmanager/confirmreservation"
+              element={
+                <ProtectedRoute
+                  authType="hotelManager"
+                  accessBy="authenticated"
+                >
+                  <HotelManagerConfirmReservation />
                 </ProtectedRoute>
               }
             ></Route>

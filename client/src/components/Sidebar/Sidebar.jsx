@@ -6,6 +6,8 @@ import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AddIcon from "@mui/icons-material/Add";
+import SingleBedIcon from "@mui/icons-material/SingleBed";
+import DoneIcon from "@mui/icons-material/Done";
 import { Link } from "react-router-dom";
 import AuthContext from "../../context/AuthProvider";
 import { useContext } from "react";
@@ -58,10 +60,6 @@ const Sidebar = () => {
               <HotelIcon className="icon" />
               <span>Oteller</span>
             </Link>
-            <Link to={"/admin/addhotel"}>
-              <AddIcon className="icon" />
-              <span>Otel Ekle</span>
-            </Link>
             <Link to={"/admin/reservations"}>
               <AccessTimeIcon className="icon" />
               <span>Rezervasyonlar</span>
@@ -89,18 +87,34 @@ const Sidebar = () => {
         <div className="center">
           <ul>
             <p className="title">GENEL</p>
-            <Link>
+            <Link to={"/hotelmanager/dashboard"}>
               <DashboardIcon className="icon" />
               <span>Kontrol Paneli</span>
             </Link>
             <p className="title">YÖNETİM</p>
-            <Link>
+            <Link to={"/hotelmanager/hotels"}>
               <HotelIcon className="icon" />
               <span>Oteller</span>
             </Link>
-            <Link>
+            <Link to={"/hotelmanager/addhotel"}>
+              <AddIcon className="icon" />
+              <span>Otel Ekle</span>
+            </Link>
+            <Link to={"/hotelmanager/rooms"}>
+              <SingleBedIcon className="icon" />
+              <span>Odalar</span>
+            </Link>
+            <Link to={"/hotelmanager/addroom"}>
+              <AddIcon className="icon" />
+              <span>Oda Ekle</span>
+            </Link>
+            <Link to={"/hotelmanager/reservations"}>
               <AccessTimeIcon className="icon" />
               <span>Rezervasyonlar</span>
+            </Link>
+            <Link to={"/hotelmanager/confirmreservation"}>
+              <DoneIcon className="icon" />
+              <span>Onay Bekleyen Rezervasyonlar</span>
             </Link>
             <p className="title">SİSTEM</p>
             <Link onClick={handleLogoutHotelManager}>

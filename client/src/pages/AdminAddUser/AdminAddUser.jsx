@@ -55,7 +55,7 @@ const AdminAddUser = () => {
 
       await register(formDataToSend);
 
-      navigate("/admin/adduser");
+      navigate("/admin/users");
     } catch (error) {
       console.log(error);
       console.log(formData);

@@ -41,17 +41,25 @@ export const getTestHotelManager = async (req, res) => {
         .catch((error) => {
           res.status(404).json({ status: "no", message: error.message });
         });
-        
-    } else if ((await authorizeHotelManager(token))  & await getHotelManagerId(token) == id) 
-      {
-        await redisClient.del(id);
-        HotelManagerTest.findById(id).then((hmanager) => {
-            redisClient.set(id,JSON.stringify(hmanager));
-            res.status(200).json({status:"ok",fromCache:false,data:hmanager})
-        }).catch((error) => {res.status(404).json({ status: "no", message: error.message });})
-      }
-    else {
-      res.status(404).json({ status: "no", message: "Unauthorized process!",token });
+    } else if (
+      (await authorizeHotelManager(token)) &
+      ((await getHotelManagerId(token)) == id)
+    ) {
+      await redisClient.del(id);
+      HotelManagerTest.findById(id)
+        .then((hmanager) => {
+          redisClient.set(id, JSON.stringify(hmanager));
+          res
+            .status(200)
+            .json({ status: "ok", fromCache: false, data: hmanager });
+        })
+        .catch((error) => {
+          res.status(404).json({ status: "no", message: error.message });
+        });
+    } else {
+      res
+        .status(404)
+        .json({ status: "no", message: "Unauthorized process!", token });
     }
   } catch (error) {
     res.status(404).json({ status: "no", message: error.message });
@@ -153,22 +161,42 @@ export const addTestHotelManager = async (req, res) => {
       } = req.body;
       const encryptedPassword = await bcrypt.hash(password, 8);
 
-      if (!profilePicture) {
-        var result = await cloudinary.uploader.upload(req.file.path);
-      }
-
       const newTestHotelManager = new HotelManagerTest({
         firstName,
         lastName,
         email,
         password: encryptedPassword,
-        profilePicture: `${result ? result.secure_url : profilePicture}`,
+        profilePicture: `${
+          profilePicture
+            ? profilePicture
+            : `http://localhost:5001/` + req.file.path
+        }`,
         phoneNumber,
       });
 
       await newTestHotelManager.save().then(() => {
         res.status(200).json({ status: "ok" });
       });
+    } else {
+      res.status(404).json({ status: "no", message: "Unauthorized process!" });
+    }
+  } catch (error) {
+    res.status(404).json({ status: "no", message: error.message });
+  }
+};
+
+export const deleteHotelManager = async (req, res) => {
+  const { id, token } = req.params;
+  try {
+    if (await authorizeAdmin(token)) {
+      await HotelManagerTest.findByIdAndDelete(id)
+        .then(() => {
+          redisClient.hdel("testhotelmanagers", id);
+          res.status(200).json({ status: "ok" });
+        })
+        .catch((error) => {
+          res.status(404).json({ status: "no", message: error.message });
+        });
     } else {
       res.status(404).json({ status: "no", message: "Unauthorized process!" });
     }

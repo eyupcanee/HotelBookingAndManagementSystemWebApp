@@ -21,3 +21,9 @@ export const getCommentsByHotel = (id) =>
   axios.get(`${baseUrl}/commenttest/get/hotel/${id}`);
 
 export const getRoom = (id) => axios.get(`${baseUrl}/roomtest/get/${id}`);
+
+export const getAllHotelsByManager = (id) =>
+  axios.get(`${baseUrl}/hoteltest/get/manager/${id}`);
+
+export const addHotel = (hotel, token) =>
+  axios.post(`${baseUrl}/hoteltest/addhotel/${token}`, hotel);
