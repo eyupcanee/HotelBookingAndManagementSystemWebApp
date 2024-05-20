@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "http://localhost:5001";
+const baseUrl = process.env.REACT_APP_BASE_URL;
 
 export const loginUser = (user) =>
   axios.post(`${baseUrl}/usertest/login`, user);
