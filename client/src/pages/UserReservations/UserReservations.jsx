@@ -7,6 +7,7 @@ import ReservationCard from "../../components/ReservationCard/ReservationCard";
 import { useEffect, useState } from "react";
 import { getReservatşonsByUser } from "../../api/reservationApi";
 import { jwtDecode } from "jwt-decode";
+import Title from "../../components/Title/Title";
 const UserReservations = () => {
   const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -45,6 +46,25 @@ const UserReservations = () => {
         className="container"
         style={{ marginTop: "40px", marginBottom: "40px" }}
       >
+        {reservations && reservations.length > 0 ? (
+          <></>
+        ) : (
+          <div
+            className="center-title"
+            style={{
+              textAlign: "center",
+              marginBottom: "200px",
+              marginTop: "200px",
+            }}
+          >
+            <Title
+              title={"Rezervasyon Bulunamadı :("}
+              description={
+                "Herhangi bir rezervasyon yaptırmadınız. Rezervasyon yaptırmak için oteller sayfasını ziyaret ediniz."
+              }
+            />
+          </div>
+        )}
         {reservations.map((reservation, index) => {
           return (
             <>

@@ -13,4 +13,8 @@ redisClient.on("error", (error) => {
   redisClient.end();
 });
 
+export const redisClear = () => {
+  redisClient.flushall();
+};
+
 export default redisClient;

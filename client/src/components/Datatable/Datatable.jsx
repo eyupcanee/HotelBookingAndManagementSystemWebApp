@@ -108,12 +108,6 @@ const Datatable = ({ data, dataInfo }) => {
             >
               Delete
             </button>
-            <button
-              className="update-button"
-              onClick={() => handleUpdate(params.id)}
-            >
-              Update
-            </button>
           </div>
         );
       },

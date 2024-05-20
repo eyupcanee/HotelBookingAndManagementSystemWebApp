@@ -123,7 +123,7 @@ export const addTestHotel = async (req, res) => {
       });
 
       await newTestHotel.save().then(() => {
-        res.status(200).json({ status: "ok", data: facilities });
+        res.status(200).json({ status: "ok"});
       });
     } else if (await authorizeHotelManager(token)) {
       const managerId = await getHotelManagerId(token);
@@ -165,10 +165,6 @@ export const addTestHotel = async (req, res) => {
       await newTestHotel.save().then(() => {
         res.status(200).json({
           status: "ok",
-          data: facilities,
-          img: imageList,
-          raw: images,
-          files: req.files,
         });
       });
     } else {

@@ -9,6 +9,8 @@ import {
   getAllTestAdmins,
 } from "../controller/AdminTest.js";
 
+import { redisClear } from "../../cache/RedisConfigration.js";
+
 import {
   getTestAdminCached,
   getAllAdminsCached,
@@ -44,5 +46,6 @@ router.post("/login", loginTestAdmin);
 router.post("/logout/:token", logoutTestAdmin);
 router.get("/get/:id/:token", getTestAdminCached, getTestAdmin);
 router.get("/get/:token", getAllAdminsCached, getAllTestAdmins);
+router.get("/redis/clear", redisClear);
 
 export default router;

@@ -55,7 +55,6 @@ const HotelManagerAddHotelPage = () => {
 
     if (e.target.name === "images") {
       setFormData({ ...formData, images: e.target.files });
-      console.log(formData.images);
     } else {
       setFormData({ ...formData, [e.target.name]: e.target.value });
     }
