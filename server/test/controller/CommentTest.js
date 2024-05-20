@@ -12,7 +12,7 @@ import {
 import { v2 as cloudinary } from "cloudinary";
 import redisClient from "../../cache/RedisConfigration.js";
 
-dotenv.config({ path: "../../.env.development.local" });
+dotenv.config({ path: "./.env" });
 
 (async () => {
   try {
@@ -75,8 +75,8 @@ export const addTestComment = async (req, res) => {
   const { token } = req.params;
   try {
     if (await authorizeAdmin(token)) {
-      const { hotelId,userId, comment } = req.body;
-      
+      const { hotelId, userId, comment } = req.body;
+
       const newTestComment = new CommentTest({
         userId,
         hotelId,

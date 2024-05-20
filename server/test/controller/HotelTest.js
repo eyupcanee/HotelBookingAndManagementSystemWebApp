@@ -16,7 +16,7 @@ import {
 import { v2 as cloudinary } from "cloudinary";
 import redisClient from "../../cache/RedisConfigration.js";
 
-dotenv.config({ path: "../../.env.development.local" });
+dotenv.config({ path: "./.env" });
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -123,7 +123,7 @@ export const addTestHotel = async (req, res) => {
       });
 
       await newTestHotel.save().then(() => {
-        res.status(200).json({ status: "ok"});
+        res.status(200).json({ status: "ok" });
       });
     } else if (await authorizeHotelManager(token)) {
       const managerId = await getHotelManagerId(token);

@@ -16,7 +16,7 @@ import HotelTestRoutes from "./test/routes/HotelTestRoutes.js";
 import RoomTestRoutes from "./test/routes/RoomTestRoutes.js";
 import ReservationTestRoutes from "./test/routes/ReservationTestRoutes.js";
 
-dotenv.config({ path: "./.env.development.local" });
+dotenv.config({ path: "./.env" });
 
 // APP Configration
 const app = express();

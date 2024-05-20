@@ -1,7 +1,7 @@
 import ioredis from "ioredis";
 import dotenv from "dotenv";
 
-dotenv.config({ path: "../.env.development.local" });
+dotenv.config({ path: "./.env" });
 
 const redisClient = new ioredis({
   host: process.env.REDIS_HOST,

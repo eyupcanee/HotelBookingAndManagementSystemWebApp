@@ -17,7 +17,7 @@ import { v2 as cloudinary } from "cloudinary";
 import redisClient from "../../cache/RedisConfigration.js";
 import RoomTest from "../models/RoomTest.js";
 
-dotenv.config({ path: "../../.env.development.local" });
+dotenv.config({ path: "./.env" });
 
 (async () => {
   try {

@@ -12,7 +12,7 @@ import {
 import { v2 as cloudinary } from "cloudinary";
 import redisClient from "../../cache/RedisConfigration.js";
 
-dotenv.config({ path: "../../.env.development.local" });
+dotenv.config({ path: "./.env" });
 var c_name;
 var a_key;
 var s_key;

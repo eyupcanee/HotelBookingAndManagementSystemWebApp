@@ -7,7 +7,7 @@ import { authorizeAdmin, getAdminId } from "../../util/Authorize.js";
 import { v2 as cloudinary } from "cloudinary";
 import redisClient from "../../cache/RedisConfigration.js";
 
-dotenv.config({ path: "../../.env.development.local" });
+dotenv.config({ path: "./.env" });
 
 (async () => {
   try {
